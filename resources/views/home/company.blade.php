@@ -5,7 +5,7 @@
         <div class="card-body box-profile">
             <div class="text-center">
             <img class="profile-user-img img-fluid img-circle"
-                src="{{ (is_file(url('assets/img/logo/'.Request::user()->image)))? url('assets/img/logo/'.Request::user()->image):url('assets/img/logo/default.png')}}"
+                src="{{ (is_file('assets/img/logo/'.Request::user()->image))? url('assets/img/logo/'.Request::user()->image):url('assets/img/logo/default.png')}}"
                 alt="User profile picture">
             </div>
             <h3 class="profile-username text-center">{{ $company->name }}</h3>

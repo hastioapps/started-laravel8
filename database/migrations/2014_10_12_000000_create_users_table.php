@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->char('role_id',10)->nullable();
             $table->char('status',15)->default('Enabled');
             $table->char('started',10);
-            $table->char('img',20)->nullable();
+            $table->string('img')->nullable();
             $table->boolean('master');
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();

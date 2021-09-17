@@ -10,6 +10,8 @@ return [
     'before_delete'=>'Data akan dihapus...!!!',
     'failed_save'=>'Data gagal disimpan.', 
     'config_failed_save'=>'Konfigurasi gagal disimpan.', 
-    'system_error'=>'System error, hubungi dukungan IT.',
+    'system_error'=>'System error, hubungi dukungan IT.', 
+    'ext_not_allowed'=>'Ekstensi tidak diizinkan.', 
+    'size_max_50'=>'Ukuran file maksimal 50kb.',
 
 ];

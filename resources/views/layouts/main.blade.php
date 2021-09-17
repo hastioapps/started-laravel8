@@ -48,7 +48,7 @@
                 </li>
                 <li class="nav-item dropdown user-menu">
                     <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
-                        <img src="{{ (is_file(url('assets/img/'.Request::user()->image)))? url('assets/img/'.Request::user()->image):url('assets/img/default.png')}}" class="user-image img-circle elevation-2" alt="Img">
+                        <img src="{{ (asset('storage/users/'.Request::user()->img))? asset('storage/users/'.Request::user()->img):url('assets/img/default.png')}}" class="user-image img-circle elevation-2" alt="Img" style="background-color:#ffffff">
                     </a>
                 </li>
                 <li class="nav-item">

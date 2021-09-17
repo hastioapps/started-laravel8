@@ -51,6 +51,32 @@ class ProfileController extends Controller
                 $alert['alert']= 'Error';
                 $alert['message']=__('alert.system_error');
             }
+        }else if ($request->file){
+            $file=$request->file('file');
+            
+            $allowed_ext    = ['jpg', 'jpeg', 'png'];
+			$file_ext		= strtolower($file->getClientOriginalExtension());
+			$file_size      = $file->getSize();
+			$user 		    = $request->user()->username;
+		    //$pathSave       = 'public/users';
+		    $name 			= $user.'.'.$file_ext;
+		    //$temp			= url().'/assets/img/users/'.$name;
+				
+		    if(!in_array($file_ext, $allowed_ext)){
+		        $alert['alert']= 'Warning';
+				$alert['message']=__('alert.ext_not_allowed');
+		    }else{
+		        if ($file_size>51200){
+		            $alert['alert']= 'Warning';
+				    $alert['message']=__('alert.size_max_50');
+		        }else{
+		            $file->storeAs('public/users',$name);
+		            User::where('id',$request->user()->id)->update(['img'=> $name]);
+		            $alert['alert']= 'Success';
+				    $alert['message']=__('alert.after_save');
+				    $alert['img']='<img class="profile-user-img img-fluid img-circle" src="'.asset("storage/users/".$name).'" alt="..." id="user-photo">';
+		        }
+		    }
         }else{
             $alert['alert']= 'Error';
             $alert['message']=__('alert.system_error');

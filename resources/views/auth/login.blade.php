@@ -14,7 +14,7 @@
     <form action="{{ url('auth/login') }}" method="POST">
         @csrf
         <div class="input-group mb-2">
-          <input value="{{ old('username') }}" placeholder="Username" class="form-control form-control-border border-width-2 form-control-sm @error('username') is-invalid @enderror" id="username" name="username" type="text" maxlength="10" required/>
+          <input value="{{ old('username') }}" placeholder="Username" class="form-control form-control-sm @error('username') is-invalid @enderror" id="username" name="username" type="text" maxlength="10" required/>
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-user"></span>
@@ -23,7 +23,7 @@
           @error('username') <div class="invalid-feedback">{{ $message }}</div> @enderror
         </div>
         <div class="input-group mb-2">
-          <input value="" placeholder="{{ __('auth.password') }}" class="form-control form-control-border border-width-2 form-control-sm @error('password') is-invalid @enderror" id="password" name="password" type="password" required/>
+          <input value="" placeholder="{{ __('auth.password') }}" class="form-control form-control-sm @error('password') is-invalid @enderror" id="password" name="password" type="password" required/>
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-key"></span>

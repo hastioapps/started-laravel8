@@ -3,10 +3,8 @@
 <div class="col-12">
     <div class="card card-primary card-outline">
         <div class="card-body box-profile">
-            <div class="text-center">
-            <img class="profile-user-img img-fluid img-circle"
-                src="{{ (is_file(url('assets/img/'.Request::user()->image)))? url('assets/img/'.Request::user()->image):url('assets/img/default.png')}}"
-                alt="User profile picture">
+            <div class="text-center userImg">
+                <img class="profile-user-img img-fluid img-circle" src="{{ (asset('storage/users/'.Request::user()->img))? asset('storage/users/'.Request::user()->img):url('assets/img/default.png')}}" alt="..." id="user-photo">
             </div>
             <h3 class="profile-username text-center">{{ Request::user()->username }}</h3>
             <p class="text-muted text-center">{{ Request::user()->role_id }}</p>
@@ -89,6 +87,24 @@
     </div>
 </div>
 
+<!-- Modal upload-->
+<div class="modal fade" id="modalLogo">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form class="form-horizontal" action="#">
+                    <div class="input-group input-group-sm">
+                        <input type="file" name="file"  id="file" class="form-control">
+                        <span class="input-group-append">
+                        <button type="submit" class="btn btn-default btn-flat" name="btnLogo" id="btnLogo"><i class="fa fa-upload"></i></button>
+                        </span>
+                    </div>
+                </form>   
+            </div>
+        </div>
+    </div>
+</div>
+
 <script type="text/javascript">
     $("#txtName").change(function(){
         var txtName=$("#txtName").val();
@@ -128,5 +144,43 @@
             }
         });
     });
+
+    $('#user-photo').click(function (){
+        $('#modalLogo').modal('show');
+        return false;
+    });
+
+    $(document).on('click','#btnLogo',function(e){
+            e.preventDefault();
+            if ($('#file').val()!=''){
+                var form_data = new FormData();
+                form_data.append('file', $('#file').prop('files')[0]);
+                $.ajax({
+                    type    : "POST",
+                    dataType : "json",
+                    url: 'profile/change_atribute',
+                    data: form_data,
+                    cache: false,
+                    processData: false,
+                    contentType: false,
+                    beforeSend: function() {
+                        $(".userImg").LoadingOverlay("show");
+                        $('#modalLogo').modal('hide');
+                    },success: function(json){
+                        $(".userImg").LoadingOverlay("hide");
+                        $('#file').val('');
+                        if (json.alert=='Error'){
+                            toastr.error(json.message);
+                        }else if (json.alert=='Warning'){
+                            toastr.warning(json.message);
+                        }else if (json.alert=='Success'){
+                            $('#modalLogo').modal('hide');
+                            toastr.success(json.message);
+                            $(".userImg").html(json.img);
+                        }
+                    }
+                });
+            }
+        });
 </script>
 @endsection
