@@ -29,12 +29,7 @@
               <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
                 <li class="nav-item nav-link">
                     <div class="input-group input-group-sm">
-                        <input class="form-control form-control-navbar" placeholder="{{ __('label.tcode') }}" aria-label="tcode">
-                        <div class="input-group-append">
-                            <button class="btn btn-navbar">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </div>
+                        <input id="tcode" autofocus class="form-control form-control-navbar" placeholder="{{ __('label.tcode') }}" aria-label="tcode">
                     </div>
                 </li>
                 <li class="nav-item dropdown">

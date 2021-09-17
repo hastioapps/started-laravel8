@@ -8,7 +8,7 @@
                 src="{{ (is_file(url('assets/img/'.Request::user()->image)))? url('assets/img/'.Request::user()->image):url('assets/img/default.png')}}"
                 alt="User profile picture">
             </div>
-            <h3 class="profile-username text-center">{{ Request::user()->name }}</h3>
+            <h3 class="profile-username text-center">{{ Request::user()->username }}</h3>
             <p class="text-muted text-center">{{ Request::user()->role_id }}</p>
             @error('password')
                 <script type="text/javascript">
@@ -31,9 +31,9 @@
                                 <table class="table table-sm">
                                 <tbody>
                                     <tr>
-                                        <td style="width:20%">Username</td>
+                                        <td style="width:20%">{{ __('label.name') }}</td>
                                         <td style="width:5%">:</td>
-                                        <td style="width:75%">{{ Request::user()->username }}</td>
+                                        <td style="width:75%"><input value="{{ Request::user()->name }}" class="form-control form-control-sm" maxlength="100" id="txtName" type="text"/></td>
                                     </tr>
                                     <tr>
                                         <td>Email</td>
@@ -43,7 +43,7 @@
                                     <tr>
                                         <td>Phone</td>
                                         <td>:</td>
-                                        <td>{{ Request::user()->phone }}</td>
+                                        <td><input value="{{ Request::user()->phone }}" class="form-control form-control-sm" id="txtPhone" maxlength="15" type="text"/></td>
                                     </tr>
                                     <tr>
                                         <td>Master</td>
@@ -60,7 +60,7 @@
                             </div>
                         </div>
                         <div class="tab-pane fade" id="vert-tabs-password" role="tabpanel" aria-labelledby="vert-tabs-password-tab">
-                            <form action="{{ url('profile') }}" method="POST">
+                            <form action="{{ url('profile/change_password') }}" method="POST">
                                 @csrf
                                 <div class="form-group row mb-2">
                                     <label class="col-sm-2 col-form-label">{{ __('auth.new_password') }}</label>
@@ -88,4 +88,45 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+    $("#txtName").change(function(){
+        var txtName=$("#txtName").val();
+        $.ajax({
+            type      : "POST",
+            dataType  : "json",
+            url       : 'profile/change_atribute',
+            data      : 'changeName='+txtName,
+            success : function(data){
+                if (data.alert=='Error'){
+                    toastr.error(data.message);
+                }else if (data.alert=='Warning'){
+                    toastr.warning(data.message);
+                }else if (data.alert=='Success'){
+                    toastr.success(data.message);
+                }
+            }
+        });
+    });
+
+    
+    $("#txtPhone").change(function(){
+        var txtPhone=$("#txtPhone").val();
+        $.ajax({
+            type      : "POST",
+            dataType  : "json",
+            url       : 'profile/change_atribute',
+            data      : 'changePhone='+txtPhone,
+            success : function(data){
+                if (data.alert=='Error'){
+                    toastr.error(data.message);
+                }else if (data.alert=='Warning'){
+                    toastr.warning(data.message);
+                }else if (data.alert=='Success'){
+                    toastr.success(data.message);
+                }
+            }
+        });
+    });
+</script>
 @endsection

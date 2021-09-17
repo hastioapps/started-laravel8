@@ -50,5 +50,6 @@ Route::post('/started/company', [StartedCompanyController::class,'store'])->midd
 Route::get('/welcome', [StartedWelcomeController::class,'welcome'])->name('welcome')->middleware('auth','verified','role');
 Route::post('/welcome', [StartedWelcomeController::class,'store'])->middleware('auth','verified','role');
 Route::get('/profile', [ProfileController::class,'profile'])->name('profile')->middleware('auth','verified','role');
-Route::post('/profile', [ProfileController::class,'change_password'])->middleware('auth','verified','role');
+Route::post('/profile/change_password', [ProfileController::class,'change_password'])->middleware('auth','verified');
+Route::post('/profile/change_atribute', [ProfileController::class,'change_atribute'])->middleware('auth','verified');
 Route::get('/company', [CompanyController::class,'company'])->name('company')->middleware('auth','verified','role');

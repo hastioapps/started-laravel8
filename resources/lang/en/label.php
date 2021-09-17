@@ -23,5 +23,7 @@ return [
     'created_at'=>'Created at',
     'updated_at'=>'Updated at',
     'general'=>'General',
-
+    'manage_account'=>'Manage Account',
+    'navigation'=>'Navigation',
+    'name'=>'Name',
 ];

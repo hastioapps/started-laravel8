@@ -9,7 +9,7 @@
 <form id="resetForm" action="{{ route('password.email') }}" method="POST">
     @csrf
     <div class="input-group mb-2">
-        <input value="{{ old('email') }}" placeholder="Email" class="form-control form-control-sm @error('email') is-invalid @enderror" id="email" name="email" type="email" required/>
+        <input value="{{ old('email') }}" placeholder="Email" class="form-control form-control-border border-width-2 form-control-sm @error('email') is-invalid @enderror" id="email" name="email" type="email" required/>
         <div class="input-group-append">
           <div class="input-group-text">
             <span class="fas fa-envelope"></span>

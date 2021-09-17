@@ -23,5 +23,7 @@ return [
     'created_at'=>'Dibuat tgl.',
     'updated_at'=>'Dirubah tgl.',
     'general'=>'Umum',
-
+    'manage_account'=>'Kelola Akun',
+    'navigation'=>'Navigasi',
+    'name'=>'Nama',
 ];

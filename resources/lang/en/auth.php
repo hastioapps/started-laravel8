@@ -24,7 +24,7 @@ return [
     'forgotten_password'=>'Forgotten password',
     'reset_password'=>'Reset password',
     'new_password'=>'New password',
-    're_password'=>'Re-password',
+    're_password'=>'Confirm Password',
     'search'=>'Search',
     'activation_code'=>'Activation code',
     'resend_activation_code'=>'Resend activation code',

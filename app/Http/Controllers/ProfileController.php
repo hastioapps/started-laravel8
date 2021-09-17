@@ -31,4 +31,30 @@ class ProfileController extends Controller
         $request->session()->flash('success',__('alert.after_update'));
         return back();
     }
+
+    public function change_atribute(Request $request){
+        if ($request->changeName){
+            $data=$request->changeName;
+            if (User::where('id',$request->user()->id)->update(['name'=> $data])){
+                $alert['alert']= 'Success';
+                $alert['message']=__('alert.after_update');
+            }else{
+                $alert['alert']= 'Error';
+                $alert['message']=__('alert.system_error');
+            }
+        }else if ($request->changePhone){
+            $data=$request->changePhone;
+            if (User::where('id',$request->user()->id)->update(['phone'=> $data])){
+                $alert['alert']= 'Success';
+                $alert['message']=__('alert.after_update');
+            }else{
+                $alert['alert']= 'Error';
+                $alert['message']=__('alert.system_error');
+            }
+        }else{
+            $alert['alert']= 'Error';
+            $alert['message']=__('alert.system_error');
+        }
+        echo json_encode($alert);
+    }
 }

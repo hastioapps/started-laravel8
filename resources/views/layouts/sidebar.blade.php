@@ -1,6 +1,6 @@
 <aside class="control-sidebar control-sidebar-dark">
-    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-      <li class="nav-header">Menu</li>
+    <ul class="nav nav-pills nav-sidebar flex-column mt-2" data-widget="treeview" role="menu" data-accordion="false">
+      <li class="nav-header">{{ __('label.manage_account') }}</li>
       <li class="nav-item">
         <a href="{{ route('profile') }}" class="nav-link">
           <i class="nav-icon fa fa-user"></i>
@@ -15,6 +15,6 @@
         </a>
       </li>
       @endif
-      <li class="nav-header">{{ __('label.your_apps') }}</li>
+      <li class="nav-header">{{ __('label.navigation') }}</li>
     </ul>
 </aside>
