@@ -13,4 +13,5 @@ return [
     'system_error'=>'System error, contact IT Suport.', 
     'ext_not_allowed'=>'Extension not allowed.', 
     'size_max_50'=>'Maximum file size 50kb.',
+    'size_max_50'=>'Maximum file size 100kb.',
 ];

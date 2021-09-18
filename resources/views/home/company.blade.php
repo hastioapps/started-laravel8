@@ -2,11 +2,16 @@
 @section('content')
 <div class="col-12">
     <div class="card card-primary card-outline">
-        <div class="card-body box-profile">
+        <div class="card-header box-profile">
+            <div class="card-tools">
+                <a type="button" href="#" class="btn btn-tool" ><i class="fas fa-edit"></i></a>
+                <a type="button" href="{{ route('home') }}" class="btn btn-tool" ><i class="fas fa-times"></i></a>
+            </div>
+            <br>
             <div class="text-center">
-            <img class="profile-user-img img-fluid img-circle"
-                src="{{ (is_file('assets/img/logo/'.Request::user()->image))? url('assets/img/logo/'.Request::user()->image):url('assets/img/logo/default.png')}}"
-                alt="User profile picture">
+                <a href="#" class="logo">
+                    <img class="profile-user-img img-fluid" src="{{ (is_file('storage/company-img/'.$company->img))? asset('storage/company-img/'.$company->img):url('assets/img/logo-default.png')}}" alt="...">
+                </a>
             </div>
             <h3 class="profile-username text-center">{{ $company->name }}</h3>
             <div class="row">
@@ -80,4 +85,62 @@
         </div>
     </div>
 </div>
+
+<!-- Modal upload-->
+<div class="modal fade" id="modalLogo">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form class="form-horizontal" action="#">
+                    <div class="input-group input-group-sm">
+                        <input type="file" name="file"  id="file" class="form-control">
+                        <span class="input-group-append">
+                        <button type="submit" class="btn btn-default btn-flat" name="btnLogo" id="btnLogo"><i class="fa fa-upload"></i></button>
+                        </span>
+                    </div>
+                </form>   
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $('.logo').click(function (){
+        $('#modalLogo').modal('show');
+        return false;
+    });
+
+    $(document).on('click','#btnLogo',function(e){
+            e.preventDefault();
+            if ($('#file').val()!=''){
+                var form_data = new FormData();
+                form_data.append('file', $('#file').prop('files')[0]);
+                $.ajax({
+                    type    : "POST",
+                    dataType : "json",
+                    url: 'company/change_logo',
+                    data: form_data,
+                    cache: false,
+                    processData: false,
+                    contentType: false,
+                    beforeSend: function() {
+                        $(".logo").LoadingOverlay("show");
+                        $('#modalLogo').modal('hide');
+                    },success: function(json){
+                        $(".logo").LoadingOverlay("hide");
+                        $('#file').val('');
+                        if (json.alert=='Error'){
+                            toastr.error(json.message);
+                        }else if (json.alert=='Warning'){
+                            toastr.warning(json.message);
+                        }else if (json.alert=='Success'){
+                            $('#modalLogo').modal('hide');
+                            toastr.success(json.message);
+                            $(".logo").html(json.img);
+                        }
+                    }
+                });
+            }
+        });
+</script>
 @endsection

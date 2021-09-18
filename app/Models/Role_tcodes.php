@@ -13,6 +13,6 @@ class Role_tcodes extends Model
     public $timestamps = false;
     protected $keyType = 'string';
     protected $fillable = [
-        'id', 'role_id', 'tcode_id', 'company_id',
+        'id', 'role_id', 'tcode_id',
     ];
 }

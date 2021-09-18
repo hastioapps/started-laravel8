@@ -42,7 +42,7 @@ Route::post('/auth/forgot-password', [ForgotPasswordController::class,'email'])-
 Route::get('/auth/reset-password/{token}', [ForgotPasswordController::class,'reset'])->name('password.reset')->middleware('guest');
 Route::post('/auth/reset-password', [ForgotPasswordController::class,'update'])->name('password.update')->middleware('guest');
 
-Route::get('/', [HomeController::class,'home'])->middleware('auth','verified','role');
+Route::get('/', [HomeController::class,'home'])->name('index')->middleware('auth','verified','role');
 Route::get('/home', [HomeController::class,'home'])->name('home')->middleware('auth','verified','role');
 
 Route::get('/started/company', [StartedCompanyController::class,'company'])->name('started1')->middleware('auth','verified','role');
@@ -53,3 +53,4 @@ Route::get('/profile', [ProfileController::class,'profile'])->name('profile')->m
 Route::post('/profile/change_password', [ProfileController::class,'change_password'])->middleware('auth','verified');
 Route::post('/profile/change_atribute', [ProfileController::class,'change_atribute'])->middleware('auth','verified');
 Route::get('/company', [CompanyController::class,'company'])->name('company')->middleware('auth','verified','role');
+Route::post('/company/change_logo', [CompanyController::class,'change_logo'])->middleware('auth','verified');

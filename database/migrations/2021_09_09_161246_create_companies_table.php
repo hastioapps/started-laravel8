@@ -23,7 +23,7 @@ class CreateCompaniesTable extends Migration
             $table->char('npwp',20)->nullable();
             $table->string('npwp_name',100)->nullable();
             $table->text('npwp_address')->nullable();
-            $table->char('img',20)->nullable();
+            $table->string('img')->nullable();
             $table->string('owner',100);
             $table->timestamps();
         });

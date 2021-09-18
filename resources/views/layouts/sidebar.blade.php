@@ -4,7 +4,7 @@
       <li class="nav-item">
         <a href="{{ route('profile') }}" class="nav-link">
           <i class="nav-icon fa fa-user"></i>
-          <p>{{ Request::user()->name }}</p>
+          <p>{{ Str::limit(Request::user()->name,20,'...') }}</p>
         </a>
       </li>
       @if(Request::user()->company_id!=null)

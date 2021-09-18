@@ -3,6 +3,9 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use App\Models\Tcodes;
+use App\Models\Role_tcodes;
+use Illuminate\Support\Facades\Route;
 class EnsureUserHasRole
 {
     /**
@@ -23,12 +26,23 @@ class EnsureUserHasRole
                 return redirect()->route('welcome');
             }
         }else{
-            $tcode[]='/';
-            $tcode[]='home';
-            $tcode[]='profile';
-            $tcode[]='company';
-            $currentPath=$request->path();
-            $allow = in_array($currentPath,$tcode);
+            $validate_tcode[]='index';
+            $validate_tcode[]='home';
+            $validate_tcode[]='profile';
+            $validate_tcode[]='company';
+            $currentPath=Route::currentRouteName();
+            if ($request->user()->role_id=='Admin'){
+                $tcodes=Tcodes::select('id')->where('access','Public')->get();
+                foreach ($tcodes as $tcode){
+                    $validate_tcode[]=$tcode->id;
+                }
+            }else{
+                $tcodes=Role_tcodes::select('tcode_id')->where('role_id',$request->user()->role_id)->get();
+                foreach ($tcodes as $tcode){
+                    $validate_tcode[]=$tcode->tcode_id;
+                }
+            }
+            $allow = in_array($currentPath,$validate_tcode);
             if(!$allow){
                 return redirect()->route('home');
             }

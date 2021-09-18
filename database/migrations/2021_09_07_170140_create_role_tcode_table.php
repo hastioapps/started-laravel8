@@ -17,7 +17,6 @@ class CreateRoleTcodeTable extends Migration
             $table->string('id')->primary();
             $table->string('role_id');
             $table->char('tcode_id',4);
-            $table->foreignId('company_id');
         });
     }
 

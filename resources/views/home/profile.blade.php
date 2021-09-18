@@ -2,12 +2,18 @@
 @section('content')
 <div class="col-12">
     <div class="card card-primary card-outline">
-        <div class="card-body box-profile">
-            <div class="text-center userImg">
-                <img class="profile-user-img img-fluid img-circle" src="{{ (asset('storage/users/'.Request::user()->img))? asset('storage/users/'.Request::user()->img):url('assets/img/default.png')}}" alt="..." id="user-photo">
+        <div class="card-header box-profile">
+            <div class="card-tools">
+                <a type="button" href="{{ route('home') }}" class="btn btn-tool" ><i class="fas fa-times"></i></a>
+            </div>
+            <br>
+            <div class="text-center">
+                <a href="#" class="userImg">
+                    <img class="profile-user-img img-fluid" src="{{ (is_file('storage/users-img/'.Request::user()->img))? asset('storage/users-img/'.Request::user()->img):url('assets/img/default.png')}}" alt="...">
+                </a>
             </div>
             <h3 class="profile-username text-center">{{ Request::user()->username }}</h3>
-            <p class="text-muted text-center">{{ Request::user()->role_id }}</p>
+            <p class="text-muted text-center">{{ Str::of(Request::user()->role_id)->ltrim(Request::user()->company_id) }}</p>
             @error('password')
                 <script type="text/javascript">
                     $(document).ready(function (){ 
@@ -145,7 +151,7 @@
         });
     });
 
-    $('#user-photo').click(function (){
+    $('.userImg').click(function (){
         $('#modalLogo').modal('show');
         return false;
     });
