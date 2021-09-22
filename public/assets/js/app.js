@@ -17,6 +17,23 @@ $(document).ready(function (){
     });
 });
 
+function cekRoute(tcode){
+    $.ajax({
+        type    : "POST",
+        url     : "tcode",
+        data    : "tcode="+tcode,
+        dataType : "json",
+        success : function(json){
+            if (json.alert=='Warning'){
+                toastr.warning(json.message);
+            }else if (json.alert=='Success'){
+                document.location.href=json.message;
+            }
+        }
+    });
+    return false;
+}
+
 function roundValue(val, denominator) {
     if(denominator == undefined || isNaN(denominator)) denominator = "0.01";
 

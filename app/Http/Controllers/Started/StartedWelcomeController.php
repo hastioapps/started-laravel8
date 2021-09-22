@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Started;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Tcodes;
-use App\Models\Role_tcodes;
 use App\Models\User;
 
 class StartedWelcomeController extends Controller

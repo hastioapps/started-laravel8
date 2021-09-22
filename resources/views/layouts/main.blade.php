@@ -19,19 +19,32 @@
     <body class="hold-transition layout-top-nav layout-navbar-fixed text-sm">
         <div class="wrapper">
           <!-- Navbar -->
-          <nav class="main-header navbar navbar-expand navbar-dark navbar-primary">
+          <nav class="main-header navbar navbar-expand-md navbar-dark navbar-primary">
             <div class="container-fluid">
-              <a href="{{ url('home') }}" class="navbar-brand">
+              <a href="{{ url('/') }}" class="navbar-brand">
                 <img src="{{ url('logo.svg') }}" alt="..." class="brand-image" style="opacity: .8"/>
               </a>
+              <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+        
+              <div class="collapse navbar-collapse order-3" id="navbarCollapse">
+                <!-- Left navbar links -->
+                <ul class="navbar-nav">
+                  <li class="nav-item {{ (Request::is('home*'))?'active':'' }}">
+                    <a href="{{ url('home') }}" class="nav-link">{{ __('label.home') }}</a>
+                  </li>
+                  <li class="nav-item {{ (Request::is('reports*'))?'active':'' }}">
+                    <a href="{{ url('reports') }}" class="nav-link">{{ __('label.reports') }}</a>
+                  </li>
+                  <li class="nav-item {{ (Request::is('master_data*'))?'active':'' }}">
+                    <a href="{{ url('masters') }}" class="nav-link">{{ __('label.master_data') }}</a>
+                  </li>
+                </ul>
+              </div>
 
               <!-- Right navbar links -->
               <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
-                <li class="nav-item nav-link">
-                    <div class="input-group input-group-sm">
-                        <input id="tcode" autofocus class="form-control form-control-navbar" placeholder="{{ __('label.tcode') }}" aria-label="tcode">
-                    </div>
-                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
                         <i class="fa fa-language"></i>
@@ -46,13 +59,10 @@
                       </a>
                   </div>
                 </li>
-                <li class="nav-item dropdown user-menu">
-                    <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+                <li class="nav-item user-menu">
+                    <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#">
                         <img src="{{ (is_file('storage/users-img/'.Request::user()->img))? asset('storage/users-img/'.Request::user()->img):url('assets/img/default.png')}}" class="user-image img-circle elevation-2" alt="Img" style="background-color:#ffffff">
                     </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('logout') }}" class="nav-link"><i class="nav-icon fa fa-sign-out-alt"></i></a>
                 </li>
               </ul>
             </div>
@@ -62,8 +72,8 @@
           <div class="content-wrapper">
             <!-- Content Header (Page header) -->
             <div class="content-header">
-              <div class="container-fluid">
-                <div class="row mb-2 mt-2">
+              <div class="container-fluid mt-2">
+                <div class="row mb-2">
                   <div class="col-sm-6">
                       <h5 class="m-0">{{ config('app.name') }}</h5>
                   </div><!-- /.col -->

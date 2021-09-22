@@ -1,10 +1,12 @@
 <?php
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+
 class LangController extends Controller
 {
-    public function selectLang(){
-        setcookie('lang',$_GET['id'],['path' => '/']);
+    public function selectLang(Request $request){
+        setcookie('lang',$request->id,['path' => '/']);
         return redirect()->back();
     }
 }

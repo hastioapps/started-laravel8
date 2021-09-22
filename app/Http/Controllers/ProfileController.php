@@ -20,7 +20,7 @@ class ProfileController extends Controller
         $this->breadcrumb->add(__('label.profile'), '/profile');
 		$data['breadcrumbs'] = $this->breadcrumb->render();
         $data['title'] = __('label.profile');
-        return view('home.profile',$data);
+        return view('profile',$data);
     }
 
     public function change_password(Request $request){

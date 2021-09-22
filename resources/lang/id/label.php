@@ -19,6 +19,7 @@ return [
     'started_period'=>'Masukkan periode akuntansi, di mana anda akan mulai memasukkan transaksi, seperti:',
     'welcome_to_join'=>'Selamat bergabung, semoga bisnis Anda semakin menyenangkan.',
     'company'=>'Perusahaan',
+    'company_edit'=>'Edit perusahaan',
     'profile'=>'Profil',
     'created_at'=>'Dibuat tgl.',
     'updated_at'=>'Dirubah tgl.',
@@ -26,4 +27,9 @@ return [
     'manage_account'=>'Kelola Akun',
     'navigation'=>'Navigasi',
     'name'=>'Nama',
+    'users'=>'Pengguna',
+    'roles'=>'Peran',
+    'master_data'=>'Data Induk',
+    'reports'=>'Laporan',
+    'transactions'=>'Transaksi',
 ];

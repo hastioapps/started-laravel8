@@ -4,7 +4,7 @@
     <div class="card card-primary card-outline">
         <div class="card-header box-profile">
             <div class="card-tools">
-                <a type="button" href="#" class="btn btn-tool" ><i class="fas fa-edit"></i></a>
+                <a type="button" href="{{ route('company_edit') }}" class="btn btn-tool" ><i class="fas fa-edit"></i></a>
                 <a type="button" href="{{ route('home') }}" class="btn btn-tool" ><i class="fas fa-times"></i></a>
             </div>
             <br>
@@ -45,12 +45,12 @@
                                     <tr>
                                         <td>{{ __('company.owner') }}</td>
                                         <td>:</td>
-                                        <td>{{ $company->warning }}</td>
+                                        <td>{{ $company->owner }}</td>
                                     </tr>
                                     <tr>
                                         <td>{{ __('label.currency') }}</td>
                                         <td>:</td>
-                                        <td>{{ $company->currency }}</td>
+                                        <td>{{ $company->currency_id }}</td>
                                     </tr>
                                 </tbody>
                                 </table>

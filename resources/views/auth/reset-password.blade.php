@@ -10,7 +10,7 @@
     @csrf
     <input value="{{ $token }}" name="token" type="hidden" required/>
     <div class="input-group mb-2">
-        <input readonly value="{{ $_GET['email'] }}" placeholder="Email" class="form-control form-control-sm" id="email" name="email" type="email" required/>
+        <input readonly value="{{ Request::get('email') }}" placeholder="Email" class="form-control form-control-sm" id="email" name="email" type="email" required/>
         <div class="input-group-append">
           <div class="input-group-text">
             <span class="fas fa-envelope"></span>

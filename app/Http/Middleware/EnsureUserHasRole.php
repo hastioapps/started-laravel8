@@ -30,6 +30,7 @@ class EnsureUserHasRole
             $validate_tcode[]='home';
             $validate_tcode[]='profile';
             $validate_tcode[]='company';
+            $validate_tcode[]='company_edit';
             $currentPath=Route::currentRouteName();
             if ($request->user()->role_id=='Admin'){
                 $tcodes=Tcodes::select('id')->where('access','Public')->get();
@@ -44,7 +45,8 @@ class EnsureUserHasRole
             }
             $allow = in_array($currentPath,$validate_tcode);
             if(!$allow){
-                return redirect()->route('home');
+                $request->session()->flash('warning',__('alert.forbidden_tcode').$currentPath);
+                return back();
             }
         }
         return $next($request);

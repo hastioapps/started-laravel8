@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LangController;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\EmailVerificationController;
@@ -11,6 +10,10 @@ use App\Http\Controllers\Started\StartedCompanyController;
 use App\Http\Controllers\Started\StartedWelcomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\TcodeController;
+use App\Http\Controllers\Home\HomeController;
+use App\Http\Controllers\Reports\ReportsController;
+use App\Http\Controllers\Masters\MastersController;
 
 
 /*
@@ -42,8 +45,7 @@ Route::post('/auth/forgot-password', [ForgotPasswordController::class,'email'])-
 Route::get('/auth/reset-password/{token}', [ForgotPasswordController::class,'reset'])->name('password.reset')->middleware('guest');
 Route::post('/auth/reset-password', [ForgotPasswordController::class,'update'])->name('password.update')->middleware('guest');
 
-Route::get('/', [HomeController::class,'home'])->name('index')->middleware('auth','verified','role');
-Route::get('/home', [HomeController::class,'home'])->name('home')->middleware('auth','verified','role');
+Route::post('/tcode', [TcodeController::class,'tcode'])->middleware('auth','verified');
 
 Route::get('/started/company', [StartedCompanyController::class,'company'])->name('started1')->middleware('auth','verified','role');
 Route::post('/started/company', [StartedCompanyController::class,'store'])->middleware('auth','verified','role');
@@ -54,3 +56,10 @@ Route::post('/profile/change_password', [ProfileController::class,'change_passwo
 Route::post('/profile/change_atribute', [ProfileController::class,'change_atribute'])->middleware('auth','verified');
 Route::get('/company', [CompanyController::class,'company'])->name('company')->middleware('auth','verified','role');
 Route::post('/company/change_logo', [CompanyController::class,'change_logo'])->middleware('auth','verified');
+Route::get('/company/edit', [CompanyController::class,'edit'])->name('company_edit')->middleware('auth','verified','role');
+Route::post('/company/edit', [CompanyController::class,'update'])->middleware('auth','verified');
+
+Route::get('/', [HomeController::class,'home'])->name('index')->middleware('auth','verified','role');
+Route::get('/home', [HomeController::class,'home'])->name('home')->middleware('auth','verified','role');
+Route::get('/reports', [ReportsController::class,'reports'])->name('reports')->middleware('auth','verified','role');
+Route::get('/masters', [MastersController::class,'masters'])->name('masters')->middleware('auth','verified','role');

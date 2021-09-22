@@ -19,6 +19,7 @@ return [
     'started_period'=>'Enter the accounting period, during which you will start entering transactions, such as:',
     'welcome_to_join'=>'Welcome to join, I hope your business will be more enjoyable.',
     'company'=>'Company',
+    'company_edit'=>'Edit company',
     'profile'=>'Profile',
     'created_at'=>'Created at',
     'updated_at'=>'Updated at',
@@ -26,4 +27,9 @@ return [
     'manage_account'=>'Manage Account',
     'navigation'=>'Navigation',
     'name'=>'Name',
+    'users'=>'Users',
+    'roles'=>'Roles',
+    'master_data'=>'Master Data',
+    'reports'=>'Reports',
+    'transactions'=>'Transactions',
 ];
