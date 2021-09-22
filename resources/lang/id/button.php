@@ -9,5 +9,6 @@ return [
     'save' => 'Simpan',
     'open' => 'Buka',
     'finish' => 'Selesaikan',
+    'search' => 'Cari',
 
 ];

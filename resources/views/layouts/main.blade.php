@@ -32,13 +32,13 @@
                 <!-- Left navbar links -->
                 <ul class="navbar-nav">
                   <li class="nav-item {{ (Request::is('home*'))?'active':'' }}">
-                    <a href="{{ url('home') }}" class="nav-link">{{ __('label.home') }}</a>
+                    <a href="{{ route('home') }}" class="nav-link">{{ __('label.home') }}</a>
                   </li>
                   <li class="nav-item {{ (Request::is('reports*'))?'active':'' }}">
-                    <a href="{{ url('reports') }}" class="nav-link">{{ __('label.reports') }}</a>
+                    <a href="{{ route('Y000') }}" class="nav-link">{{ __('label.reports') }}</a>
                   </li>
-                  <li class="nav-item {{ (Request::is('master_data*'))?'active':'' }}">
-                    <a href="{{ url('masters') }}" class="nav-link">{{ __('label.master_data') }}</a>
+                  <li class="nav-item {{ (Request::is('masters*'))?'active':'' }}">
+                    <a href="{{ route('Z000') }}" class="nav-link">{{ __('label.master_data') }}</a>
                   </li>
                 </ul>
               </div>

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Home;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -20,7 +21,7 @@ class ProfileController extends Controller
         $this->breadcrumb->add(__('label.profile'), '/profile');
 		$data['breadcrumbs'] = $this->breadcrumb->render();
         $data['title'] = __('label.profile');
-        return view('profile',$data);
+        return view('home.profile',$data);
     }
 
     public function change_password(Request $request){

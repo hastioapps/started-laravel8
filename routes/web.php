@@ -2,16 +2,18 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LangController;
+use App\Http\Controllers\TcodeController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Started\StartedCompanyController;
 use App\Http\Controllers\Started\StartedWelcomeController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\CompanyController;
-use App\Http\Controllers\TcodeController;
 use App\Http\Controllers\Home\HomeController;
+use App\Http\Controllers\Home\CompanyController;
+use App\Http\Controllers\Home\ProfileController;
+use App\Http\Controllers\Home\UsersController;
+use App\Http\Controllers\Home\RolesController;
 use App\Http\Controllers\Reports\ReportsController;
 use App\Http\Controllers\Masters\MastersController;
 
@@ -28,6 +30,7 @@ use App\Http\Controllers\Masters\MastersController;
 */
 
 Route::get('/lang', [LangController::class, 'selectLang']);
+Route::post('/tcode', [TcodeController::class,'tcode'])->middleware('auth','verified');
 
 Route::get('/auth/login', [LoginController::class,'login'])->name('login')->middleware('guest');
 Route::post('/auth/login', [LoginController::class,'store']);
@@ -45,12 +48,13 @@ Route::post('/auth/forgot-password', [ForgotPasswordController::class,'email'])-
 Route::get('/auth/reset-password/{token}', [ForgotPasswordController::class,'reset'])->name('password.reset')->middleware('guest');
 Route::post('/auth/reset-password', [ForgotPasswordController::class,'update'])->name('password.update')->middleware('guest');
 
-Route::post('/tcode', [TcodeController::class,'tcode'])->middleware('auth','verified');
-
 Route::get('/started/company', [StartedCompanyController::class,'company'])->name('started1')->middleware('auth','verified','role');
 Route::post('/started/company', [StartedCompanyController::class,'store'])->middleware('auth','verified','role');
 Route::get('/welcome', [StartedWelcomeController::class,'welcome'])->name('welcome')->middleware('auth','verified','role');
 Route::post('/welcome', [StartedWelcomeController::class,'store'])->middleware('auth','verified','role');
+
+Route::get('/', [HomeController::class,'home'])->name('index')->middleware('auth','verified','role');
+Route::get('/home', [HomeController::class,'home'])->name('home')->middleware('auth','verified','role');
 Route::get('/profile', [ProfileController::class,'profile'])->name('profile')->middleware('auth','verified','role');
 Route::post('/profile/change_password', [ProfileController::class,'change_password'])->middleware('auth','verified');
 Route::post('/profile/change_atribute', [ProfileController::class,'change_atribute'])->middleware('auth','verified');
@@ -58,8 +62,13 @@ Route::get('/company', [CompanyController::class,'company'])->name('company')->m
 Route::post('/company/change_logo', [CompanyController::class,'change_logo'])->middleware('auth','verified');
 Route::get('/company/edit', [CompanyController::class,'edit'])->name('company_edit')->middleware('auth','verified','role');
 Route::post('/company/edit', [CompanyController::class,'update'])->middleware('auth','verified');
+Route::resource('users',UsersController::class)->only(['index'])
+->names(['index' => 'USER'])
+->middleware('auth','verified','role');
+Route::post('/users/flexigrid', [UsersController::class,'flexigrid'])->middleware('auth','verified');
+Route::resource('roles',RolesController::class)->only(['index'])
+->names(['index' => 'ROLE'])
+->middleware('auth','verified','role');
 
-Route::get('/', [HomeController::class,'home'])->name('index')->middleware('auth','verified','role');
-Route::get('/home', [HomeController::class,'home'])->name('home')->middleware('auth','verified','role');
-Route::get('/reports', [ReportsController::class,'reports'])->name('reports')->middleware('auth','verified','role');
-Route::get('/masters', [MastersController::class,'masters'])->name('masters')->middleware('auth','verified','role');
+Route::get('/reports', [ReportsController::class,'reports'])->name('Y000')->middleware('auth','verified','role');
+Route::get('/masters', [MastersController::class,'masters'])->name('Z000')->middleware('auth','verified','role');

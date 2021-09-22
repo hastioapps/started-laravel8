@@ -9,5 +9,6 @@ return [
     'save' => 'Save',
     'open' => 'Open',
     'finish' => 'Finish',
+    'search' => 'Search',
 
 ];

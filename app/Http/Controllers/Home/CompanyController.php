@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Home;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Companies;
 use Illuminate\Support\Str;
@@ -21,7 +22,7 @@ class CompanyController extends Controller
 		$data['breadcrumbs'] = $this->breadcrumb->render();
         $data['title'] = __('label.company');
         $data['company'] = Companies::where('id',$request->user()->id)->first();
-        return view('company',$data);
+        return view('home.company',$data);
     }
 
     public function change_logo(Request $request){
@@ -62,7 +63,7 @@ class CompanyController extends Controller
         $data['title'] = __('label.company_edit');
         $data['company'] = Companies::where('id',$request->user()->id)->first();
         $data['currency'] = Currencies::select('id','description')->get();
-        return view('company_edit',$data);
+        return view('home.company_edit',$data);
     }
 
     public function update(Request $request){

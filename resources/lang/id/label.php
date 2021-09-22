@@ -31,5 +31,4 @@ return [
     'roles'=>'Peran',
     'master_data'=>'Data Induk',
     'reports'=>'Laporan',
-    'transactions'=>'Transaksi',
 ];

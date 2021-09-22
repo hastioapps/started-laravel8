@@ -6,6 +6,12 @@
  * http://jquery.org/license
  *
  */
+$.ajaxSetup({
+	headers: {
+		'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+	}
+});
+
 (function ($) {
 	/*
 	 * jQuery 1.9 support. browser object has been removed in 1.9 

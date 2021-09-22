@@ -23,13 +23,13 @@
       </li>
       <li class="nav-header">{{ __('label.manage_account') }}</li>
       <li class="nav-item">
-        <a href="#" class="nav-link {{ (Request::is('users*'))?'active':'' }}">
+        <a href="{{ route('USER') }}" class="nav-link {{ (Request::is('users*'))?'active':'' }}">
           <i class="nav-icon fas fa-users"></i>
           <p>{{ __('label.users') }}</p>
         </a>
       </li>
       <li class="nav-item">
-        <a href="#" class="nav-link {{ (Request::is('roles*'))?'active':'' }}">
+        <a href="{{ route('ROLE') }}" class="nav-link {{ (Request::is('roles*'))?'active':'' }}">
           <i class="nav-icon fas fa-universal-access"></i>
           <p>{{ __('label.roles') }}</p>
         </a>

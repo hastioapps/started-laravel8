@@ -31,5 +31,4 @@ return [
     'roles'=>'Roles',
     'master_data'=>'Master Data',
     'reports'=>'Reports',
-    'transactions'=>'Transactions',
 ];
