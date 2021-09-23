@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\Roles;
 
 class UsersController extends Controller
 {
@@ -19,7 +21,6 @@ class UsersController extends Controller
         $this->breadcrumb->add(__('label.users'), '/users');
 		$data['breadcrumbs']    = $this->breadcrumb->render();
         $data['title']          = __('label.users');
-        $data['users']          = User::select('username','name','email','phone','master','role_id','status')->paginate(10);
         return view('home.users',$data);
     }
 
@@ -30,16 +31,20 @@ class UsersController extends Controller
         $start          = (($page-1) * $rp);
       	$sortname       = (isset($request->sortname))? $request->sortname : ' id ';
       	$sortorder      = (isset($request->sortorder))? $request->sortorder : ' asc ';
-      	//$dataSearch = isset($_POST['query'])? $_POST['query'] : '';
-      	//$qType = isset($_POST['qtype'])? $_POST['qtype'] : '';
 
-        $result         = User::select('username','name','email','phone','master','role_id','status')
+        $result         = User::select('username','name','phone','role_id','status')
+                            ->where('master', '=', false)
+                            ->where('company_id', '=', $request->user()->company_id)
+                            ->filter($request['query'],$request['qtype'])
                             ->orderBy($sortname,$sortorder)
                             ->offset($start)
                             ->limit($rp)
                             ->get();
         
         $result_total   = User::select('username')
+                            ->where('master', '=', false)
+                            ->where('company_id', '=', $request->user()->company_id)
+                            ->filter($request['query'],$request['qtype'])
                             ->count();                  
         $data = $_POST;
         $data['total'] = ($result_total<100)? $result_total : 100;
@@ -54,7 +59,8 @@ class UsersController extends Controller
             }else{
                 $label_status='<i class="text-warning">'.$row->status.'</i>';
             }  
-            $array_data['cell'] =array($row->username,$row->name,$row->email,$row->phone,$row->master,$row->role_id,$label_status);
+            
+            $array_data['cell'] =array($row->username,$row->name,$row->phone,$row->role_id,$label_status);
             array_push($array_default,$array_data);
         }
         $data['rows'] = $array_default;
@@ -66,9 +72,15 @@ class UsersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $this->breadcrumb->add(__('label.home'), '/');
+        $this->breadcrumb->add(__('label.users'), '/users');
+        $this->breadcrumb->add(__('button.create'), '/users/create');
+		$data['breadcrumbs']    = $this->breadcrumb->render();
+        $data['title']          = __('label.user_create');
+        $data['roles']          = Roles::where('company_id',$request->user()->company_id)->get();
+        return view('home.users_create',$data);
     }
 
     /**
@@ -79,7 +91,32 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'username'      => 'required|max:10|unique:users,username|alpha_num',
+            'name'          => 'required|max:100',
+            'phone'         => 'max:15',
+            'roles'         => 'required',
+            'password'      => 'required|confirmed',
+        ]);
+
+        if(User::create([
+            'username'          => $request->username,
+            'name'              => $request->name,
+            'email'             => $request->username.'@hastioapps.com',
+            'phone'             => $request->phone, 
+            'password'          => Hash::make($request->password),
+            'role_id'           => $request->roles, 
+            'started'           => 'Ok',
+            'master'            => false,
+            'email_verified_at' => now(),
+            'company_id'        => $request->user()->company_id, 
+        ])){
+            $request->session()->flash('success',__('alert.after_save'));
+            return redirect()->route('USER');
+        } else {
+            $request->session()->flash('warning',__('alert.failed_save'));
+            return back();
+        }
     }
 
     /**

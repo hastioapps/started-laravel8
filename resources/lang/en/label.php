@@ -27,8 +27,11 @@ return [
     'manage_account'=>'Manage Account',
     'navigation'=>'Navigation',
     'name'=>'Name',
+    'full_name'=>'Full name',
     'users'=>'Users',
+    'user_create'=>'Create user',
     'roles'=>'Roles',
+    'role_create'=>'Create role',
     'master_data'=>'Master Data',
     'reports'=>'Reports',
 ];

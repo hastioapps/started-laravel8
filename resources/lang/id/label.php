@@ -27,8 +27,11 @@ return [
     'manage_account'=>'Kelola Akun',
     'navigation'=>'Navigasi',
     'name'=>'Nama',
+    'full_name'=>'Nama lengkap',
     'users'=>'Pengguna',
+    'user_create'=>'Buat pengguna',
     'roles'=>'Peran',
+    'role_create'=>'Buat peran',
     'master_data'=>'Data Induk',
     'reports'=>'Laporan',
 ];

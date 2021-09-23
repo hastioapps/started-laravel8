@@ -47,8 +47,10 @@ class DatabaseSeeder extends Seeder
             ['id' => 'Z080','description' => 'linked_account','level_tcode' => '2','parent' => 'Z000','icon' => 'fa fa-link','url' => 'setting/linked_account','tcode_group_id' => 'Z000','access' => 'Public'],
             ['id' => 'Z090','description' => 'period','level_tcode' => '2','parent' => 'Z000','icon' => 'fa fa-clock','url' => 'setting/period','tcode_group_id' => 'Z000','access' => 'Public'],
             */
-            ['id' => 'USER','description' => 'users','level_tcode' => '1','parent' => '0000','icon' => 'fa fa-users','url' => 'users','tcode_group_id' => '0','access' => 'Public'],
-            ['id' => 'ROLE','description' => 'roles','level_tcode' => '1','parent' => '0000','icon' => 'fa fa-universal-access','url' => 'roles','tcode_group_id' => '0','access' => 'Public'],
+            ['id' => 'USER','description' => 'users','level_tcode' => '2','parent' => '0000','icon' => 'fa fa-users','url' => 'users','tcode_group_id' => '0','access' => 'Public'],
+            ['id' => 'USRC','description' => 'users_create','level_tcode' => '3','parent' => 'USER','icon' => 'fa fa-plus','url' => 'users/create','tcode_group_id' => 'USER','access' => 'Public'],
+            ['id' => 'ROLE','description' => 'roles','level_tcode' => '2','parent' => '0000','icon' => 'fa fa-universal-access','url' => 'roles','tcode_group_id' => '0','access' => 'Public'],
+            ['id' => 'ROLC','description' => 'roles_create','level_tcode' => '3','parent' => 'ROLE','icon' => 'fa fa-plus','url' => 'roles/create','tcode_group_id' => 'ROLE','access' => 'Public'],
             ['id' => 'Z010','description' => 'branch','level_tcode' => '2','parent' => 'Z000','icon' => 'fa fa-rss','url' => 'setting/branch','tcode_group_id' => 'Z010','access' => 'Public'],
             ['id' => 'Z011','description' => 'add_branch','level_tcode' => '3','parent' => 'Z010','icon' => 'fa fa-plus','url' => 'setting/branch/add','tcode_group_id' => 'Z010','access' => 'Public'],
             ['id' => 'Z012','description' => 'edit_branch','level_tcode' => '3','parent' => 'Z010','icon' => 'fa fa-edit','url' => 'setting/branch/edit','tcode_group_id' => 'Z010','access' => 'Public'],

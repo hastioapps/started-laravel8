@@ -10,5 +10,7 @@ return [
     'open' => 'Buka',
     'finish' => 'Selesaikan',
     'search' => 'Cari',
+    'create' => 'Buat',
+    'add' => 'Tambah',
 
 ];

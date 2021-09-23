@@ -10,5 +10,7 @@ return [
     'open' => 'Open',
     'finish' => 'Finish',
     'search' => 'Search',
+    'create' => 'Create',
+    'add' => 'Add',
 
 ];

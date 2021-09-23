@@ -27,15 +27,13 @@
 		$('#dataDisplays').flexigrid({
     		url: "/users/flexigrid",
     		dataType: 'json',
-            buttons : [ {name : '<i class="fa fa-plus fa-xs"></i>',tooltip:'Tambah',bclass : 'btn btn-primary btn-xs',onpress : btnAction}
+            buttons : [ {name : '<i class="fa fa-plus fa-xs"></i>',tooltip:'{{ __("button.create") }}',bclass : 'btn btn-primary btn-xs',onpress : btnAction}
             ],
     		colModel : [
                 {display: 'Username', name : 'username',width:100, sortable : true, align: 'left', process: celDivAction},
-                {display: 'Nama', name : 'name',width:250, sortable : true, align: 'left', process: celDivAction},
-                {display: 'Email', name : 'email',width:250, sortable : true, align: 'left', process: celDivAction},
+                {display: '{{ __("label.name") }}', name : 'name',width:500, sortable : true, align: 'left', process: celDivAction},
                 {display: 'Phone', name : 'phone',width:150, sortable : true, align: 'left', process: celDivAction},
-                {display: 'Master', name : 'master',width:100, sortable : true, align: 'left', process: celDivAction},
-                {display: 'Peran', name : 'role_id',width:100, align: 'left', process: celDivAction},
+                {display: '{{ __("label.roles") }}', name : 'role_id',width:100, align: 'left', process: celDivAction},
                 {display: 'Status', name : 'status',width:80, align: 'left', process: celDivAction}
             ],
     		searchitems : false,
@@ -67,7 +65,7 @@
         function btnAction(action,grid) {
             var username=$('.trSelected',grid).children('td').eq(0).text();
             if (action == '<i class="fa fa-plus fa-xs"></i>') {
-                //
+                document.location.href='users/create';
             }
         }
 	});

@@ -62,13 +62,14 @@ Route::get('/company', [CompanyController::class,'company'])->name('company')->m
 Route::post('/company/change_logo', [CompanyController::class,'change_logo'])->middleware('auth','verified');
 Route::get('/company/edit', [CompanyController::class,'edit'])->name('company_edit')->middleware('auth','verified','role');
 Route::post('/company/edit', [CompanyController::class,'update'])->middleware('auth','verified');
-Route::resource('users',UsersController::class)->only(['index'])
-->names(['index' => 'USER'])
+Route::resource('users',UsersController::class)->only(['index','create','store'])
+->names(['index' => 'USER','create' => 'USRC'])
 ->middleware('auth','verified','role');
 Route::post('/users/flexigrid', [UsersController::class,'flexigrid'])->middleware('auth','verified');
-Route::resource('roles',RolesController::class)->only(['index'])
-->names(['index' => 'ROLE'])
+Route::resource('roles',RolesController::class)->only(['index','create','store'])
+->names(['index' => 'ROLE','create' => 'ROLC'])
 ->middleware('auth','verified','role');
+Route::post('/roles/flexigrid', [RolesController::class,'flexigrid'])->middleware('auth','verified');
 
 Route::get('/reports', [ReportsController::class,'reports'])->name('Y000')->middleware('auth','verified','role');
 Route::get('/masters', [MastersController::class,'masters'])->name('Z000')->middleware('auth','verified','role');

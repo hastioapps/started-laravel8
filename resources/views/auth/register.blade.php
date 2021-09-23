@@ -55,10 +55,10 @@
         </div>
         <div class="input-group mb-2">
           <input value="" placeholder="{{ __('auth.re_password') }}" class="form-control form-control-sm" id="password_confirmation" name="password_confirmation" type="password" required/>
-                <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-key"></span>
-            </div>
+          <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-key"></span>
+              </div>
           </div>
         </div>
         <div class="row">

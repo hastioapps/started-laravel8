@@ -27,6 +27,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'img', 
         'master', 
         'company_id',
+        'email_verified_at',
     ];
 
     /**
@@ -47,4 +48,11 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function scopeFilter($query,$search,$qtype)
+    {
+        if (isset($search) && isset($qtype)){
+            return $query->where($qtype, 'LIKE',  $search.'%');
+        }
+    }
 }
