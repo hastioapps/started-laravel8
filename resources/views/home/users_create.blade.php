@@ -5,7 +5,7 @@
         <div class="card-header">
             <h5 class="card-title">{{ $title ?? __('label.no_title') }}</h5>
             <div class="card-tools">
-                <a type="button" href="{{ route('USER') }}" class="btn btn-tool" ><i class="fas fa-times"></i></a>
+                <a type="button" href="{{ route('users') }}" class="btn btn-tool" ><i class="fas fa-times"></i></a>
             </div>
         </div>
         <form action="{{ url('users') }}" method="post" class="form-horizontal">

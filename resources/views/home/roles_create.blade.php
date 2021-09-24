@@ -5,7 +5,7 @@
         <div class="card-header">
             <h5 class="card-title">{{ $title ?? __('label.no_title') }}</h5>
             <div class="card-tools">
-                <a type="button" href="{{ route('ROLE') }}" class="btn btn-tool" ><i class="fas fa-times"></i></a>
+                <a type="button" href="{{ route('roles') }}" class="btn btn-tool" ><i class="fas fa-times"></i></a>
             </div>
         </div>
         <form action="{{ url('roles') }}" method="post" class="form-horizontal">
@@ -16,8 +16,7 @@
                     <div class="col-lg-10 col-md-10 col-sm-12 col-xs-12">
                         <input value="{{ old('role_name') }}" class="form-control form-control-sm @error('role_name') is-invalid @enderror" id="role_name" name="role_name" type="text" maxlength="20" required/>
                         @error('role_name') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                        @error('id') <label class="text-danger text-xs"> {{ $message }}</label>@enderror
-                        @error('company_id') <label class="text-danger text-xs"> {{ $message }}</label>@enderror
+                        @error('role') <label class="text-danger text-xs"> {{ $message }}</label>@enderror
                     </div>
                 </div>
             </div>

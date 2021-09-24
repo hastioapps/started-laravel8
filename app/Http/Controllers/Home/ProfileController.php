@@ -66,7 +66,7 @@ class ProfileController extends Controller
 				    $alert['message']=__('alert.size_max_100');
 		        }else{
                     $temp=$file->store('users-img');
-		            User::where('id',$request->user()->id)->update(['img'=> $name]);
+		            User::where('id',$request->id)->update(['img'=> $name]);
 		            $alert['alert']= 'Success';
 				    $alert['message']=__('alert.after_save');
 				    $alert['img']='<img class="profile-user-img img-fluid" src="'.asset('storage/'.$temp).'" alt="...">';

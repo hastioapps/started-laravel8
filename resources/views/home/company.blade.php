@@ -4,7 +4,7 @@
     <div class="card card-primary card-outline">
         <div class="card-header box-profile">
             <div class="card-tools">
-                <a type="button" href="{{ route('company_edit') }}" class="btn btn-tool" ><i class="fas fa-edit"></i></a>
+                <a type="button" href="{{ route('company.edit') }}" class="btn btn-tool" ><i class="fas fa-edit"></i></a>
                 <a type="button" href="{{ route('home') }}" class="btn btn-tool" ><i class="fas fa-times"></i></a>
             </div>
             <br>

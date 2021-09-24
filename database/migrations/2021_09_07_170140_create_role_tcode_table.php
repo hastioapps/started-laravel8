@@ -16,7 +16,7 @@ class CreateRoleTcodeTable extends Migration
         Schema::create('role_tcodes', function (Blueprint $table) {
             $table->string('id')->primary();
             $table->string('role_id');
-            $table->char('tcode_id',4);
+            $table->string('tcode_id');
         });
     }
 

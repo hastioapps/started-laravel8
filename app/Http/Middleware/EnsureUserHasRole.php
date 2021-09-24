@@ -30,9 +30,9 @@ class EnsureUserHasRole
             $validate_tcode[]='home';
             $validate_tcode[]='profile';
             $validate_tcode[]='company';
-            $validate_tcode[]='company_edit';
-            $validate_tcode[]='Y000';
-            $validate_tcode[]='Z000';
+            $validate_tcode[]='company.edit';
+            $validate_tcode[]='reports';
+            $validate_tcode[]='masters';
             $currentPath=Route::currentRouteName();
             if ($request->user()->role_id=='Admin'){
                 $tcodes=Tcodes::select('id')->where('access','Public')->get();

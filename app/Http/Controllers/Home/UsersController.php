@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Home;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use App\Models\User;
 use App\Models\Roles;
 
@@ -32,7 +33,7 @@ class UsersController extends Controller
       	$sortname       = (isset($request->sortname))? $request->sortname : ' id ';
       	$sortorder      = (isset($request->sortorder))? $request->sortorder : ' asc ';
 
-        $result         = User::select('username','name','phone','role_id','status')
+        $result         = User::select('username','name','phone','role_id','status','company_id')
                             ->where('master', '=', false)
                             ->where('company_id', '=', $request->user()->company_id)
                             ->filter($request['query'],$request['qtype'])
@@ -60,7 +61,7 @@ class UsersController extends Controller
                 $label_status='<i class="text-warning">'.$row->status.'</i>';
             }  
             
-            $array_data['cell'] =array($row->username,$row->name,$row->phone,$row->role_id,$label_status);
+            $array_data['cell'] =array($row->username,$row->name,$row->phone,Str::of($row->role_id)->ltrim($row->company_id),$label_status);
             array_push($array_default,$array_data);
         }
         $data['rows'] = $array_default;
@@ -79,7 +80,7 @@ class UsersController extends Controller
         $this->breadcrumb->add(__('button.create'), '/users/create');
 		$data['breadcrumbs']    = $this->breadcrumb->render();
         $data['title']          = __('label.user_create');
-        $data['roles']          = Roles::where('company_id',$request->user()->company_id)->get();
+        $data['roles']          = Roles::select('id','role_name')->where('company_id',$request->user()->company_id)->get();
         return view('home.users_create',$data);
     }
 
@@ -112,7 +113,7 @@ class UsersController extends Controller
             'company_id'        => $request->user()->company_id, 
         ])){
             $request->session()->flash('success',__('alert.after_save'));
-            return redirect()->route('USER');
+            return redirect()->to(url('users/'.$request->username));
         } else {
             $request->session()->flash('warning',__('alert.failed_save'));
             return back();
@@ -125,9 +126,20 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request,$id)
     {
-        //
+        $this->breadcrumb->add(__('label.home'), '/');
+        $this->breadcrumb->add(__('label.users'), '/users');
+        $this->breadcrumb->add($id, '/users/'.$id);
+		$data['breadcrumbs']    = $this->breadcrumb->render();
+        $data['title']          = __('label.users').': '.$id;
+        $data['users']          = User::select('*')->where(['username'=>$id,'master'=>false,'company_id'=>$request->user()->company_id])->first();
+        if (isset($data['users'])){
+            return view('home.users_show',$data);
+        }else{
+            $data['back']=route('users');
+            return view('layouts.not_found',$data);
+        }
     }
 
     /**
@@ -136,9 +148,37 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request,$id)
     {
-        //
+        $this->breadcrumb->add(__('label.home'), '/');
+        $this->breadcrumb->add(__('label.users'), '/users');
+        $this->breadcrumb->add(__('button.edit'), '/users'.$id.'/edit');
+		$data['breadcrumbs']    = $this->breadcrumb->render();
+        $data['title']          = __('label.user_edit');
+        $data['roles']          = Roles::select('id','role_name')->where('company_id',$request->user()->company_id)->get();
+        $data['users']          = User::select('username','name','phone','role_id')->where(['username'=>$id,'master'=>false,'company_id'=>$request->user()->company_id])->first();
+        if (isset($data['users'])){
+            return view('home.users_edit',$data);
+        }else{
+            $data['back']=route('users');
+            return view('layouts.not_found',$data);
+        }
+    }
+
+    public function reset(Request $request,$id)
+    {
+        $this->breadcrumb->add(__('label.home'), '/');
+        $this->breadcrumb->add(__('label.users'), '/users');
+        $this->breadcrumb->add(__('auth.reset_password'), '/users'.$id.'/reset');
+		$data['breadcrumbs']    = $this->breadcrumb->render();
+        $data['title']          = __('auth.reset_password');
+        $data['users']          = User::select('username')->where(['username'=>$id,'master'=>false,'company_id'=>$request->user()->company_id])->first();
+        if (isset($data['users'])){
+            return view('home.users_reset',$data);
+        }else{
+            $data['back']=route('users');
+            return view('layouts.not_found',$data);
+        }
     }
 
     /**
@@ -150,7 +190,39 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if (isset($request['btnReset'])){
+            $request->validate([
+                'password'      => 'required|confirmed',
+            ]);
+
+            if(User::where(['username'=>$id,'master'=>false,'company_id'=>$request->user()->company_id])->update([
+                'password'      => Hash::make($request->password),
+            ])){
+                $request->session()->flash('success',__('alert.after_update'));
+                return redirect()->to(url('users/'.$id));
+            } else {
+                $request->session()->flash('warning',__('alert.failed_save'));
+                return back();
+            }
+        }else{
+            $request->validate([
+                'name'          => 'required|max:100',
+                'phone'         => 'max:15',
+                'roles'         => 'required',
+            ]);
+
+            if(User::where(['username'=>$id,'master'=>false,'company_id'=>$request->user()->company_id])->update([
+                'name'              => $request->name,
+                'phone'             => $request->phone, 
+                'role_id'           => $request->roles, 
+            ])){
+                $request->session()->flash('success',__('alert.after_update'));
+                return redirect()->to(url('users/'.$id));
+            } else {
+                $request->session()->flash('warning',__('alert.failed_save'));
+                return back();
+            }
+        }
     }
 
     /**

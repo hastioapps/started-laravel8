@@ -60,16 +60,19 @@ Route::post('/profile/change_password', [ProfileController::class,'change_passwo
 Route::post('/profile/change_atribute', [ProfileController::class,'change_atribute'])->middleware('auth','verified');
 Route::get('/company', [CompanyController::class,'company'])->name('company')->middleware('auth','verified','role');
 Route::post('/company/change_logo', [CompanyController::class,'change_logo'])->middleware('auth','verified');
-Route::get('/company/edit', [CompanyController::class,'edit'])->name('company_edit')->middleware('auth','verified','role');
+Route::get('/company/edit', [CompanyController::class,'edit'])->name('company.edit')->middleware('auth','verified');
 Route::post('/company/edit', [CompanyController::class,'update'])->middleware('auth','verified');
-Route::resource('users',UsersController::class)->only(['index','create','store'])
-->names(['index' => 'USER','create' => 'USRC'])
-->middleware('auth','verified','role');
-Route::post('/users/flexigrid', [UsersController::class,'flexigrid'])->middleware('auth','verified');
-Route::resource('roles',RolesController::class)->only(['index','create','store'])
-->names(['index' => 'ROLE','create' => 'ROLC'])
-->middleware('auth','verified','role');
-Route::post('/roles/flexigrid', [RolesController::class,'flexigrid'])->middleware('auth','verified');
 
-Route::get('/reports', [ReportsController::class,'reports'])->name('Y000')->middleware('auth','verified','role');
-Route::get('/masters', [MastersController::class,'masters'])->name('Z000')->middleware('auth','verified','role');
+Route::resource('users',UsersController::class)->only(['index','create','edit'])->names(['index' => 'users'])->middleware(['auth','verified','role']);
+Route::resource('users',UsersController::class)->only(['store','update','show'])->middleware(['auth','verified']);
+Route::get('/users/{id}/reset', [UsersController::class,'reset'])->name('users.reset')->middleware('auth','verified','role');
+Route::post('/users/flexigrid', [UsersController::class,'flexigrid'])->middleware('auth','verified');
+
+Route::get('/roles/{id}/delete', [UsersController::class,'delete'])->name('roles.delete')->middleware('auth','verified','role');
+Route::resource('roles',RolesController::class)->only(['index','create','edit'])->names(['index' => 'roles'])->middleware(['auth','verified','role']);
+Route::resource('roles',RolesController::class)->only(['store','update','show','destroy'])->middleware(['auth','verified']);
+Route::post('/roles/flexigrid', [RolesController::class,'flexigrid'])->middleware('auth','verified');
+Route::post('/roles/duallist', [RolesController::class,'duallist'])->middleware('auth','verified');
+
+Route::get('/reports', [ReportsController::class,'reports'])->name('reports')->middleware('auth','verified','role');
+Route::get('/masters', [MastersController::class,'masters'])->name('masters')->middleware('auth','verified','role');

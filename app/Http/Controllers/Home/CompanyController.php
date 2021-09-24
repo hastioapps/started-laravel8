@@ -21,7 +21,7 @@ class CompanyController extends Controller
         $this->breadcrumb->add(__('label.company'), '/company');
 		$data['breadcrumbs'] = $this->breadcrumb->render();
         $data['title'] = __('label.company');
-        $data['company'] = Companies::where('id',$request->user()->id)->first();
+        $data['company'] = Companies::where('id',$request->user()->company_id)->first();
         return view('home.company',$data);
     }
 
@@ -61,7 +61,7 @@ class CompanyController extends Controller
         $this->breadcrumb->add(__('button.edit'), '/company/edit');
 		$data['breadcrumbs'] = $this->breadcrumb->render();
         $data['title'] = __('label.company_edit');
-        $data['company'] = Companies::where('id',$request->user()->id)->first();
+        $data['company'] = Companies::where('id',$request->user()->company_id)->first();
         $data['currency'] = Currencies::select('id','description')->get();
         return view('home.company_edit',$data);
     }

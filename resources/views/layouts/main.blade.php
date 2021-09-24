@@ -13,6 +13,8 @@
         <link rel="stylesheet" href="{{ url('assets/toastr/toastr.min.css') }}">
         <link rel="stylesheet" href="{{ url('assets/sweetalert/dist/sweetalert.css') }}"/>
         <link rel="stylesheet" href="{{ url('assets/flexigrid/css/flexigrid.css') }}">
+        <link rel="stylesheet" href="{{ url('assets/DualListboxTransfer/icon_font/css/icon_font.css') }}">
+        <link rel="stylesheet" href="{{ url('assets/DualListboxTransfer/css/jquery.transfer.css') }}">
         <script src="{{ url('assets/jquery/jquery.min.js') }}"></script>
         <script src="{{ url('assets/flexigrid/js/flexigrid.js') }}"></script>
     </head>
@@ -35,10 +37,10 @@
                     <a href="{{ route('home') }}" class="nav-link">{{ __('label.home') }}</a>
                   </li>
                   <li class="nav-item {{ (Request::is('reports*'))?'active':'' }}">
-                    <a href="{{ route('Y000') }}" class="nav-link">{{ __('label.reports') }}</a>
+                    <a href="{{ route('reports') }}" class="nav-link">{{ __('label.reports') }}</a>
                   </li>
                   <li class="nav-item {{ (Request::is('masters*'))?'active':'' }}">
-                    <a href="{{ route('Z000') }}" class="nav-link">{{ __('label.master_data') }}</a>
+                    <a href="{{ route('masters') }}" class="nav-link">{{ __('label.master_data') }}</a>
                   </li>
                 </ul>
               </div>
@@ -128,6 +130,7 @@
         <script src="{{ url('assets/toastr/toastr.min.js') }}"></script>
         <script src="{{ url('assets/validate/jquery.validate.js') }}"></script>
         <script src="{{ url('assets/sweetalert/dist/sweetalert.min.js') }}"></script>
+        <script src="{{ url('assets/DualListboxTransfer/js/jquery.transfer.js') }}"></script>
         <script src="{{ url('assets/js/app.js') }}"></script>
     </body>
 </html>

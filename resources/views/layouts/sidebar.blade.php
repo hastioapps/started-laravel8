@@ -4,7 +4,7 @@
       <li class="nav-item">
         <a href="{{ route('profile') }}" class="nav-link {{ (Request::is('profile'))?'active':'' }}">
           <i class="nav-icon fa fa-user"></i>
-          <p>{{ Str::limit(Request::user()->name,20,'...') }}</p>
+          <p>{{ Str::limit(Request::user()->name,30,'...') }}</p>
         </a>
       </li>
       @if(Request::user()->company_id!=null)
@@ -23,13 +23,13 @@
       </li>
       <li class="nav-header">{{ __('label.manage_account') }}</li>
       <li class="nav-item">
-        <a href="{{ route('USER') }}" class="nav-link {{ (Request::is('users*'))?'active':'' }}">
+        <a href="{{ route('users') }}" class="nav-link {{ (Request::is('users*'))?'active':'' }}">
           <i class="nav-icon fas fa-users"></i>
           <p>{{ __('label.users') }}</p>
         </a>
       </li>
       <li class="nav-item">
-        <a href="{{ route('ROLE') }}" class="nav-link {{ (Request::is('roles*'))?'active':'' }}">
+        <a href="{{ route('roles') }}" class="nav-link {{ (Request::is('roles*'))?'active':'' }}">
           <i class="nav-icon fas fa-universal-access"></i>
           <p>{{ __('label.roles') }}</p>
         </a>

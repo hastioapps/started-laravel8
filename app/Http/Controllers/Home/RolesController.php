@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Home;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Roles;
+use App\Models\Tcodes;
+use App\Models\Role_tcodes;
 use Illuminate\Support\Facades\Validator;
 
 class RolesController extends Controller
@@ -15,7 +17,7 @@ class RolesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    {   
         $this->breadcrumb->add(__('label.home'), '/');
         $this->breadcrumb->add(__('label.roles'), '/roles');
 		$data['breadcrumbs'] = $this->breadcrumb->render();
@@ -79,19 +81,21 @@ class RolesController extends Controller
      */
     public function store(Request $request)
     {
-        $validate=Validator::make([
+        Validator::make([
+            'role'          => $request->user()->company_id.$request->role_name,
+            'role_name'     => $request->role_name,
+        ],[
+            'role'          => 'required|unique:roles,id',
+            'role_name'     => 'required|max:20|alpha_num',
+        ])->validate();
+
+        if(Roles::create([
             'id'            => $request->user()->company_id.$request->role_name,
             'role_name'     => $request->role_name,
             'company_id'    => $request->user()->company_id, 
-        ],[
-            'id'            => 'required|unique:roles,id',
-            'role_name'     => 'required|max:20|alpha_num',
-            'company_id'    => 'required',
-        ])->validate();
-
-        if(Roles::create($validate)){
+        ])){
             $request->session()->flash('success',__('alert.after_save'));
-            return redirect()->route('ROLE');
+            return redirect()->to(url('roles/'.$request->role_name));
         } else {
             $request->session()->flash('warning',__('alert.failed_save'));
             return back();
@@ -104,9 +108,72 @@ class RolesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request,$id)
     {
-        //
+        $this->breadcrumb->add(__('label.home'), '/');
+        $this->breadcrumb->add(__('label.roles'), '/roles');
+        $this->breadcrumb->add($id, '/roles/'.$id);
+		$data['breadcrumbs']    = $this->breadcrumb->render();
+        $data['title']          = __('label.roles').': '.$id;
+        $data['roles']          = Roles::select('*')->where(['role_name'=>$id,'company_id'=>$request->user()->company_id])->first();
+        if (isset($data['roles'])){
+            return view('home.roles_show',$data);
+        }else{
+            $data['back']=route('roles');
+            return view('layouts.not_found',$data);
+        }
+    }
+
+    public function duallist(Request $request)
+    {
+        if ($request['id']){
+            $role_tcodes = new Role_tcodes();
+            $role=$request->id;
+        	$tcodes = $role_tcodes->tcodes($role);
+            foreach ($tcodes  as $tcode) {
+                if ($tcode->selected==$role){
+                    $selected=true;
+                }else{
+                    $selected=false;
+                }
+                if ($tcode->level_tcode==2){
+                    $groups[]=$tcode->tcode_group;
+                }
+                $data_tcodes[$tcode->tcode_group][]= array("item"=> __('label.'.$tcode->description),"value"=> $tcode->id,"selected"=> $selected);
+            }
+
+            $collect_group = collect($groups);
+            $json=array();
+            foreach ($collect_group as $group){
+                $data['groupItem']=__('label.'.$group);
+                $data['groupArray']=$data_tcodes[$group];
+                $json[]=$data;
+            }
+            return json_encode($json);
+        }else if ($request['code']){
+	        $role=$request->code;
+        	if(!isset($request->data)){
+        		Role_tcodes::where('role_id',$role)->delete();
+        		$alert['alert']= 'Success';
+        		$alert['message']=__('alert.after_save');
+        	}else{
+        		$data=$request->data;
+	        	$insertTcode=array();
+	        	foreach ($data as $tcode) {
+		        	$id=$tcode.$role;
+		        	$insertTcode[]=array("id"=>$id, "role_id"=>$role, "tcode_id"=>$tcode);
+		        }
+                Role_tcodes::where('role_id',$role)->delete();
+                if(Role_tcodes::insert($insertTcode)){
+		            $alert['alert']= 'Success';
+			        $alert['message']=__('alert.after_save');
+		        }else{
+					$alert['alert']= 'Error';
+			        $alert['message']=__('alert.system_error');
+				}
+	        }
+        	echo json_encode($alert);
+        };
     }
 
     /**

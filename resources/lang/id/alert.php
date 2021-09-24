@@ -14,6 +14,8 @@ return [
     'ext_not_allowed'=>'Ekstensi tidak diizinkan.', 
     'size_max_50'=>'Ukuran file maksimal 50kb.',
     'size_max_100'=>'Ukuran file maksimal 100kb.',
-    'forbidden_tcode'=>'Anda tidak diizinkan akses tcode ',
+    'forbidden_tcode'=>'Anda tidak diizinkan akses ',
+    'data_not_selected'=>'Data belum dipilih.',
+    'data_not_found'=>'Data tidak ditemukan.',
 
 ];

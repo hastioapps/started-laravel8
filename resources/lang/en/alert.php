@@ -14,5 +14,7 @@ return [
     'ext_not_allowed'=>'Extension not allowed.', 
     'size_max_50'=>'Maximum file size 50kb.',
     'size_max_100'=>'Maximum file size 100kb.',
-    'forbidden_tcode'=>'You are not allowed tcode access ',
+    'forbidden_tcode'=>'You are not allowed access ',
+    'data_not_selected'=>'Data not selected.',
+    'data_not_found'=>'Data not found.',
 ];

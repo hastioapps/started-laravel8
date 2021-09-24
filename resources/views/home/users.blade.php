@@ -27,7 +27,10 @@
 		$('#dataDisplays').flexigrid({
     		url: "/users/flexigrid",
     		dataType: 'json',
-            buttons : [ {name : '<i class="fa fa-plus fa-xs"></i>',tooltip:'{{ __("button.create") }}',bclass : 'btn btn-primary btn-xs',onpress : btnAction}
+            buttons : [ {name : '<i class="fa fa-plus fa-xs"></i>',tooltip:'{{ __("button.create") }}',bclass : 'btn btn-primary btn-xs',onpress : btnAction},
+                        {name : '<i class="fa fa-edit fa-xs"></i>',tooltip:'{{ __("button.edit") }}',bclass : 'btn btn-primary btn-xs',onpress : btnAction},
+                        {name : '<i class="fa fa-key fa-xs"></i>',tooltip:'{{ __("auth.reset_password") }}',bclass : 'btn btn-primary btn-xs',onpress : btnAction},
+                        {name : '<i class="fa fa-folder-open fa-xs"></i>',tooltip:'{{ __("button.open") }}',bclass : 'btn btn-primary btn-xs',onpress : btnAction}
             ],
     		colModel : [
                 {display: 'Username', name : 'username',width:100, sortable : true, align: 'left', process: celDivAction},
@@ -59,6 +62,7 @@
         function celDivAction(celDiv) {
             $( celDiv ).dblclick( function() {
                 var username = $(this).parent().parent().children('td').eq(0).text();
+                document.location.href='users/'+username;
             });    
         }
 
@@ -66,6 +70,24 @@
             var username=$('.trSelected',grid).children('td').eq(0).text();
             if (action == '<i class="fa fa-plus fa-xs"></i>') {
                 document.location.href='users/create';
+            }else if (action == '<i class="fa fa-edit fa-xs"></i>') {
+                if ($('.trSelected',grid).length != 1) {
+                    toastr.warning('{{ __("alert.data_not_selected") }}');
+                }else{
+                    document.location.href='users/'+username+'/edit';
+                }
+            }else if (action == '<i class="fa fa-key fa-xs"></i>') {
+                if ($('.trSelected',grid).length != 1) {
+                    toastr.warning('{{ __("alert.data_not_selected") }}');
+                }else{
+                    document.location.href='users/'+username+'/reset';
+                }
+            }else if (action == '<i class="fa fa-folder-open fa-xs"></i>') {
+                if ($('.trSelected',grid).length != 1) {
+                    toastr.warning('{{ __("alert.data_not_selected") }}');
+                }else{
+                    document.location.href='users/'+username;
+                }
             }
         }
 	});

@@ -30,6 +30,8 @@ return [
     'full_name'=>'Full name',
     'users'=>'Users',
     'user_create'=>'Create user',
+    'user_edit'=>'Edit user',
+    'user_reset'=>'Reset password',
     'roles'=>'Roles',
     'role_create'=>'Create role',
     'master_data'=>'Master Data',

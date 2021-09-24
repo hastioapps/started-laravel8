@@ -22,7 +22,9 @@
 		$('#dataDisplays').flexigrid({
     		url: "/roles/flexigrid",
     		dataType: 'json',
-            buttons : [ {name : '<i class="fa fa-plus fa-xs"></i>',tooltip:'{{ __("button.create") }}',bclass : 'btn btn-primary btn-xs',onpress : btnAction}
+            buttons : [ {name : '<i class="fa fa-plus fa-xs"></i>',tooltip:'{{ __("button.create") }}',bclass : 'btn btn-primary btn-xs',onpress : btnAction},
+                        {name : '<i class="fa fa-times fa-xs"></i>',tooltip:'{{ __("button.delete") }}',bclass : 'btn btn-danger btn-xs',onpress : btnAction},
+                        {name : '<i class="fa fa-folder-open fa-xs"></i>',tooltip:'{{ __("button.open") }}',bclass : 'btn btn-primary btn-xs',onpress : btnAction}
             ],
     		colModel : [
                 {display: '{{ __("label.roles") }}', name : 'role_name',width:600, sortable : true, align: 'left', process: celDivAction},
@@ -50,6 +52,7 @@
         function celDivAction(celDiv) {
             $( celDiv ).dblclick( function() {
                 var roles = $(this).parent().parent().children('td').eq(0).text();
+                document.location.href='roles/'+roles;
             });    
         }
 
@@ -57,6 +60,18 @@
             var roles=$('.trSelected',grid).children('td').eq(0).text();
             if (action == '<i class="fa fa-plus fa-xs"></i>') {
                 document.location.href='roles/create';
+            }else if (action == '<i class="fa fa-folder-open fa-xs"></i>') {
+                if ($('.trSelected',grid).length != 1) {
+                    toastr.warning('{{ __("alert.data_not_selected") }}');
+                }else{
+                    document.location.href='roles/'+roles;
+                }
+            }else if (action == '<i class="fa fa-times fa-xs"></i>') {
+                if ($('.trSelected',grid).length != 1) {
+                    toastr.warning('{{ __("alert.data_not_selected") }}');
+                }else{
+                    document.location.href='roles/'+roles+'/delete';
+                }
             }
         }
 	});

@@ -30,6 +30,8 @@ return [
     'full_name'=>'Nama lengkap',
     'users'=>'Pengguna',
     'user_create'=>'Buat pengguna',
+    'user_edit'=>'Edit pengguna',
+    'user_reset'=>'Setel ulang password',
     'roles'=>'Peran',
     'role_create'=>'Buat peran',
     'master_data'=>'Data Induk',

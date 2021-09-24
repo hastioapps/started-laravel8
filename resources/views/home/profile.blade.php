@@ -59,6 +59,11 @@
                                         <td>:</td>
                                         <td>{{ Request::user()->created_at }}</td>
                                     </tr>
+                                    <tr>
+                                        <td>{{ __('label.updated_at') }}</td>
+                                        <td>:</td>
+                                        <td>{{ Request::user()->updated_at }}</td>
+                                    </tr>
                                 </tbody>
                                 </table>
                             </div>
@@ -161,6 +166,7 @@
             if ($('#file').val()!=''){
                 var form_data = new FormData();
                 form_data.append('file', $('#file').prop('files')[0]);
+                form_data.append('id', '{{ Request::user()->id }}');
                 $.ajax({
                     type    : "POST",
                     dataType : "json",
