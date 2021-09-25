@@ -16,8 +16,8 @@
                     <label class="col-lg-10 col-md-10 col-sm-12 col-xs-12 control-label">{{ __('alert.confirm_delete') }} "<b>{{ $id }}</b>"</label>
                     <div class="col-lg-2 col-md-2 col-sm-12 col-xs-12">
                         <input value="" class="form-control form-control-sm @error('role') is-invalid @enderror" id="role" name="role" type="text" maxlength="20" required/>
-                        <input value="{{ $id }}" id="role_confirmation" name="role_confirmation" type="hidden"/>
                         @error('role') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                        @error('role_id') <label class="text-danger text-xs"> {{ $message }}</label>@enderror
                     </div>
                 </div>
             </div>

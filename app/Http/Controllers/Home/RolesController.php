@@ -218,17 +218,24 @@ class RolesController extends Controller
      */
     public function destroy(Request $request,$id)
     {
-        $role_id=$request->user()->company_id.$id;
-        $request->validate([
-            'role'     => 'required|max:20|confirmed',
-        ]);
+        $role_id=$request->user()->company_id.$request->role;
+        Validator::make([
+            'role_id'           => $role_id,
+            'role'              => $request->role,
+            'role_confirmation' => $id,
+        ],[
+            'role_id'           => 'unique:users,role_id',
+            'role'              => 'required|max:20|confirmed',
+        ],[
+            'role_id.unique'    => __('validation.delete_unique'),
+        ])->validate();
 
-        if(Roles::where('id',$role_id)->delete() && Role_tcodes::where('role_id',$role_id)->delete()){
+        if(Roles::where('id',$role_id)->delete() || Role_tcodes::where('role_id',$role_id)->delete()){
             $request->session()->flash('success',__('alert.after_delete'));
             return redirect()->route('roles');
         } else {
             $request->session()->flash('warning',__('alert.failed_delete'));
-            return back();
+            return redirect()->route('roles');
         }
     }
 }

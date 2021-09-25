@@ -123,6 +123,7 @@ return [
     'uploaded' => 'The :attribute failed to upload.',
     'url' => 'The :attribute must be a valid URL.',
     'uuid' => 'The :attribute must be a valid UUID.',
+    'delete_unique' => 'The :attribute cannot be removed, because it is already in use.',
 
     /*
     |--------------------------------------------------------------------------

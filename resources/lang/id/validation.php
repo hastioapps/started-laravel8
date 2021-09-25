@@ -119,10 +119,11 @@ return [
     'starts_with' => ':attribute harus dimulai dengan salah satu dari berikut ini: :values.',
     'string' => ':attribute harus berupa string.',
     'timezone' => ':attribute harus berupa zona waktu yang valid.',
-    'unique' => ':attribute sudah pernah digunakan.',
+    'unique' => ':attribute sudah digunakan.',
     'uploaded' => ':attribute gagal diupload.',
     'url' => ':attribute harus berupa URL yang valid.',
     'uuid' => ':attribute harus berupa UUID yang valid.', 
+    'delete_unique' => ':attribute tidak dapat dihapus, karena sudah digunakan.',
     
     /*
     |--------------------------------------------------------------------------
