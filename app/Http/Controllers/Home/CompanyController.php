@@ -52,7 +52,7 @@ class CompanyController extends Controller
             $alert['alert']= 'Warning';
             $alert['message']=__('alert.failed_save');
         }
-        echo json_encode($alert);
+        return json_encode($alert);
     }
 
     public function edit(Request $request){

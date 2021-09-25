@@ -95,7 +95,7 @@ class RolesController extends Controller
             'company_id'    => $request->user()->company_id, 
         ])){
             $request->session()->flash('success',__('alert.after_save'));
-            return redirect()->to(url('roles/'.$request->role_name));
+            return redirect()->route('roles');
         } else {
             $request->session()->flash('warning',__('alert.failed_save'));
             return back();
@@ -172,7 +172,7 @@ class RolesController extends Controller
 			        $alert['message']=__('alert.system_error');
 				}
 	        }
-        	echo json_encode($alert);
+        	return json_encode($alert);
         };
     }
 
@@ -199,14 +199,36 @@ class RolesController extends Controller
         //
     }
 
+    public function delete($id)
+    {
+        $this->breadcrumb->add(__('label.home'), '/');
+        $this->breadcrumb->add(__('label.roles'), '/roles');
+        $this->breadcrumb->add(__('button.delete'), '/roles/delete');
+		$data['breadcrumbs']    = $this->breadcrumb->render();
+        $data['title']          = __('label.role_delete');
+        $data['id']          =$id;
+        return view('home.roles_delete',$data);
+    }
+
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request,$id)
     {
-        //
+        $role_id=$request->user()->company_id.$id;
+        $request->validate([
+            'role'     => 'required|max:20|confirmed',
+        ]);
+
+        if(Roles::where('id',$role_id)->delete() && Role_tcodes::where('role_id',$role_id)->delete()){
+            $request->session()->flash('success',__('alert.after_delete'));
+            return redirect()->route('roles');
+        } else {
+            $request->session()->flash('warning',__('alert.failed_delete'));
+            return back();
+        }
     }
 }

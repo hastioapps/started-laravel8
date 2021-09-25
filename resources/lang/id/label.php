@@ -34,6 +34,9 @@ return [
     'user_reset'=>'Setel ulang password',
     'roles'=>'Peran',
     'role_create'=>'Buat peran',
+    'role_show'=>'Menampilkan peran',
+    'role_delete'=>'Hapus peran',
     'master_data'=>'Data Induk',
     'reports'=>'Laporan',
+    'displays'=>'Menampilkan',
 ];

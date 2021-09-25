@@ -118,7 +118,7 @@
                 $.ajax({
                     type    : "POST",
                     dataType : "json",
-                    url: 'company/change_logo',
+                    url: "{{ url('company/change_logo') }}",
                     data: form_data,
                     cache: false,
                     processData: false,

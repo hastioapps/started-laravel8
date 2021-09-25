@@ -34,6 +34,9 @@ return [
     'user_reset'=>'Reset password',
     'roles'=>'Roles',
     'role_create'=>'Create role',
+    'role_show'=>'Show role',
+    'role_delete'=>'Delete role',
     'master_data'=>'Master Data',
     'reports'=>'Reports',
+    'displays'=>'Displays',
 ];

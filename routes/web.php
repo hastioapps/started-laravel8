@@ -64,13 +64,15 @@ Route::get('/company/edit', [CompanyController::class,'edit'])->name('company.ed
 Route::post('/company/edit', [CompanyController::class,'update'])->middleware('auth','verified');
 
 Route::resource('users',UsersController::class)->only(['index','create','edit'])->names(['index' => 'users'])->middleware(['auth','verified','role']);
-Route::resource('users',UsersController::class)->only(['store','update','show'])->middleware(['auth','verified']);
+Route::resource('users',UsersController::class)->only(['store','update'])->middleware(['auth','verified']);
 Route::get('/users/{id}/reset', [UsersController::class,'reset'])->name('users.reset')->middleware('auth','verified','role');
 Route::post('/users/flexigrid', [UsersController::class,'flexigrid'])->middleware('auth','verified');
+Route::post('/users/show', [UsersController::class,'show'])->middleware('auth','verified');
+Route::post('/users/status', [UsersController::class,'status'])->middleware('auth','verified');
 
-Route::get('/roles/{id}/delete', [UsersController::class,'delete'])->name('roles.delete')->middleware('auth','verified','role');
-Route::resource('roles',RolesController::class)->only(['index','create','edit'])->names(['index' => 'roles'])->middleware(['auth','verified','role']);
-Route::resource('roles',RolesController::class)->only(['store','update','show','destroy'])->middleware(['auth','verified']);
+Route::get('/roles/{id}/delete', [RolesController::class,'delete'])->name('roles.delete')->middleware('auth','verified','role');
+Route::resource('roles',RolesController::class)->only(['index','create','edit','show'])->names(['index' => 'roles'])->middleware(['auth','verified','role']);
+Route::resource('roles',RolesController::class)->only(['store','update','destroy'])->middleware(['auth','verified']);
 Route::post('/roles/flexigrid', [RolesController::class,'flexigrid'])->middleware('auth','verified');
 Route::post('/roles/duallist', [RolesController::class,'duallist'])->middleware('auth','verified');
 

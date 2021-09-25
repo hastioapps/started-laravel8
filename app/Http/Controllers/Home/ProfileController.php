@@ -79,6 +79,6 @@ class ProfileController extends Controller
             $alert['alert']= 'Warning';
             $alert['message']=__('alert.failed_save');
         }
-        echo json_encode($alert);
+        return json_encode($alert);
     }
 }

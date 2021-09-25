@@ -20,7 +20,7 @@
 <script type="text/javascript">
 	$(document).ready(function (){
 		$('#dataDisplays').flexigrid({
-    		url: "/roles/flexigrid",
+    		url: "{{ url('roles/flexigrid') }}",
     		dataType: 'json',
             buttons : [ {name : '<i class="fa fa-plus fa-xs"></i>',tooltip:'{{ __("button.create") }}',bclass : 'btn btn-primary btn-xs',onpress : btnAction},
                         {name : '<i class="fa fa-times fa-xs"></i>',tooltip:'{{ __("button.delete") }}',bclass : 'btn btn-danger btn-xs',onpress : btnAction},

@@ -53,6 +53,7 @@ class DatabaseSeeder extends Seeder
             ['id' => 'users.reset','description' => 'users_reset','level_tcode' => '3','parent' => 'users','icon' => 'fa fa-key','url' => 'users/reset','tcode_group' => 'users','access' => 'Public'],
             ['id' => 'roles','description' => 'roles','level_tcode' => '2','parent' => 'home','icon' => 'fa fa-universal-access','url' => 'roles','tcode_group' => 'roles','access' => 'Public'],
             ['id' => 'roles.create','description' => 'role_create','level_tcode' => '3','parent' => 'roles','icon' => 'fa fa-plus','url' => 'roles/create','tcode_group' => 'roles','access' => 'Public'],
+            ['id' => 'roles.show','description' => 'role_show','level_tcode' => '3','parent' => 'roles','icon' => 'fa fa-folder-open','url' => 'roles/show','tcode_group' => 'roles','access' => 'Public'],
             ['id' => 'roles.delete','description' => 'role_delete','level_tcode' => '3','parent' => 'roles','icon' => 'fa fa-times','url' => 'roles/delete','tcode_group' => 'roles','access' => 'Public'],
         ]);
         

@@ -9,6 +9,7 @@ return [
     'before_save'=>'Data akan disimpan...!!!',
     'before_delete'=>'Data akan dihapus...!!!',
     'failed_save'=>'Data gagal disimpan.', 
+    'failed_delete'=>'Data gagal dihapus.', 
     'config_failed_save'=>'Konfigurasi gagal disimpan.', 
     'system_error'=>'System error, hubungi dukungan IT.', 
     'ext_not_allowed'=>'Ekstensi tidak diizinkan.', 
@@ -17,5 +18,6 @@ return [
     'forbidden_tcode'=>'Anda tidak diizinkan akses ',
     'data_not_selected'=>'Data belum dipilih.',
     'data_not_found'=>'Data tidak ditemukan.',
+    'confirm_delete'=>'Tindakan ini tidak bisa dibatalkan, Ini akan menghapus secara permanen. Untuk mengkonfirmasi silakan ketik',
 
 ];

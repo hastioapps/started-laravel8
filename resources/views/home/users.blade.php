@@ -22,14 +22,27 @@
     </div>        	
 </div>
 
+<div class="modal fade" id="modalDisplays">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">{{ __('label.displays') }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="modal-body dataModal"></div>
+        </div>
+    </div>
+</div>
+
 <script type="text/javascript">
 	$(document).ready(function (){
 		$('#dataDisplays').flexigrid({
-    		url: "/users/flexigrid",
+    		url: '{{ url("users/flexigrid") }}',
     		dataType: 'json',
             buttons : [ {name : '<i class="fa fa-plus fa-xs"></i>',tooltip:'{{ __("button.create") }}',bclass : 'btn btn-primary btn-xs',onpress : btnAction},
                         {name : '<i class="fa fa-edit fa-xs"></i>',tooltip:'{{ __("button.edit") }}',bclass : 'btn btn-primary btn-xs',onpress : btnAction},
                         {name : '<i class="fa fa-key fa-xs"></i>',tooltip:'{{ __("auth.reset_password") }}',bclass : 'btn btn-primary btn-xs',onpress : btnAction},
+                        {name : '<i class="fa fa-lock fa-xs"></i>',tooltip:'Status',bclass : 'btn btn-danger btn-xs',onpress : btnAction},
                         {name : '<i class="fa fa-folder-open fa-xs"></i>',tooltip:'{{ __("button.open") }}',bclass : 'btn btn-primary btn-xs',onpress : btnAction}
             ],
     		colModel : [
@@ -62,12 +75,26 @@
         function celDivAction(celDiv) {
             $( celDiv ).dblclick( function() {
                 var username = $(this).parent().parent().children('td').eq(0).text();
-                document.location.href='users/'+username;
+                $('#modalDisplays').modal('show');
+                $.ajax({
+                        type    : "POST",
+                        url     : '{{ url("users/show") }}',
+                        data    : "username="+username,
+                        beforeSend: function () {
+                            $(".dataModal").LoadingOverlay("show");
+                            $(".dataModal").html('');      
+                        },
+                        success : function(data){
+                            $(".dataModal").LoadingOverlay("hide");
+                            $(".dataModal").html(data);            
+                        }
+                });
             });    
         }
 
         function btnAction(action,grid) {
             var username=$('.trSelected',grid).children('td').eq(0).text();
+            var status=$('.trSelected',grid).children('td').eq(4).text();
             if (action == '<i class="fa fa-plus fa-xs"></i>') {
                 document.location.href='users/create';
             }else if (action == '<i class="fa fa-edit fa-xs"></i>') {
@@ -86,7 +113,42 @@
                 if ($('.trSelected',grid).length != 1) {
                     toastr.warning('{{ __("alert.data_not_selected") }}');
                 }else{
-                    document.location.href='users/'+username;
+                    $('#modalDisplays').modal('show');
+                    $.ajax({
+                        type    : "POST",
+                        url     : '{{ url("users/show") }}',
+                        data    : "username="+username,
+                        beforeSend: function () {
+                            $(".dataModal").LoadingOverlay("show");
+                            $(".dataModal").html('');      
+                        },
+                        success : function(data){
+                            $(".dataModal").LoadingOverlay("hide");
+                            $(".dataModal").html(data);            
+                        }
+                    });
+                }
+            }else if (action == '<i class="fa fa-lock fa-xs"></i>') {
+                if ($('.trSelected',grid).length != 1) {
+                    toastr.warning('{{ __("alert.data_not_selected") }}');
+                }else{
+                    $.ajax({
+                        type    : "POST",
+                        dataType  : "json",
+                        url     : '{{ url("users/status") }}',
+                        data    : "username="+username+"&status="+status,
+                        success : function(json){
+                            if (json.alert=='Error'){
+                                toastr.error(json.message);
+                            }else if (json.alert=='Warning'){
+                                toastr.warning(json.message);
+                            }else if (json.alert=='Success'){
+                                toastr.success(json.message);
+                                $('#dataDisplays').flexReload();
+                                return false;
+                            }
+                        }
+                    });
                 }
             }
         }

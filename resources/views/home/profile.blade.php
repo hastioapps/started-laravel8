@@ -142,7 +142,7 @@
         $.ajax({
             type      : "POST",
             dataType  : "json",
-            url       : 'profile/change_atribute',
+            url       : "{{ url('profile/change_atribute') }}",
             data      : 'changePhone='+txtPhone,
             success : function(data){
                 if (data.alert=='Error'){
@@ -170,7 +170,7 @@
                 $.ajax({
                     type    : "POST",
                     dataType : "json",
-                    url: 'profile/change_atribute',
+                    url: "{{ url('profile/change_atribute') }}",
                     data: form_data,
                     cache: false,
                     processData: false,

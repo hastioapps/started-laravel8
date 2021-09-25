@@ -113,7 +113,7 @@ class UsersController extends Controller
             'company_id'        => $request->user()->company_id, 
         ])){
             $request->session()->flash('success',__('alert.after_save'));
-            return redirect()->to(url('users/'.$request->username));
+            return redirect()->route('users');
         } else {
             $request->session()->flash('warning',__('alert.failed_save'));
             return back();
@@ -126,19 +126,71 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request,$id)
+    public function show(Request $request)
     {
-        $this->breadcrumb->add(__('label.home'), '/');
-        $this->breadcrumb->add(__('label.users'), '/users');
-        $this->breadcrumb->add($id, '/users/'.$id);
-		$data['breadcrumbs']    = $this->breadcrumb->render();
-        $data['title']          = __('label.users').': '.$id;
-        $data['users']          = User::select('*')->where(['username'=>$id,'master'=>false,'company_id'=>$request->user()->company_id])->first();
-        if (isset($data['users'])){
-            return view('home.users_show',$data);
+        $users=User::select('username','name','phone','role_id','company_id','status','created_at','updated_at')
+                    ->where([
+                        'username'=>$request->username,
+                        'master'=>false,
+                        'company_id'=>$request->user()->company_id])
+                    ->first();
+
+        if (isset($users)){
+            if (is_file('storage/users-img/'.$users->img)){
+                $temp=asset('storage/users-img/'.$users->img);
+            }else{
+                $temp=url('assets/img/default.png');
+            }
+
+            $text='<div class="table-responsive p-0" style="max-height: 450px">
+                <table class="table table-head-fixed table-sm">
+                    <thead>
+                        <tr>
+                            <th colspan="3" class="text-center"><img class="profile-user-img img-fluid" src="'.$temp.'" alt="..."></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="width:20%">Username</td>
+                            <td style="width:5%">:</td>
+                            <td style="width:75%">'.$users->username.'</td>
+                        </tr>
+                        <tr>
+                            <td style="width:20%">'.__("label.name").'</td>
+                            <td style="width:5%">:</td>
+                            <td style="width:75%">'.$users->name.'</td>
+                        </tr>
+                        <tr>
+                            <td>Phone</td>
+                            <td>:</td>
+                            <td>'.$users->phone.'</td>
+                        </tr>
+                        <tr>
+                            <td>'.__("label.roles").'</td>
+                            <td>:</td>
+                            <td>'.Str::of($users->role_id)->ltrim($users->company_id).'</td>
+                        </tr>
+                        <tr>
+                            <td>Status</td>
+                            <td>:</td>
+                            <td>'.$users->status.'</td>
+                        </tr>
+                        <tr>
+                            <td>'.__("label.created_at").'</td>
+                            <td>:</td>
+                            <td>'.$users->created_at.'</td>
+                        </tr>
+                        <tr>
+                            <td>'.__("label.updated_at").'</td>
+                            <td>:</td>
+                            <td>'.$users->updated_at.'</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>';
+            return $text;
         }else{
-            $data['back']=route('users');
-            return view('layouts.not_found',$data);
+            return __('alert.data_not_found');
         }
     }
 
@@ -199,7 +251,7 @@ class UsersController extends Controller
                 'password'      => Hash::make($request->password),
             ])){
                 $request->session()->flash('success',__('alert.after_update'));
-                return redirect()->to(url('users/'.$id));
+                return redirect()->route('users');
             } else {
                 $request->session()->flash('warning',__('alert.failed_save'));
                 return back();
@@ -217,7 +269,7 @@ class UsersController extends Controller
                 'role_id'           => $request->roles, 
             ])){
                 $request->session()->flash('success',__('alert.after_update'));
-                return redirect()->to(url('users/'.$id));
+                return redirect()->route('users');
             } else {
                 $request->session()->flash('warning',__('alert.failed_save'));
                 return back();
@@ -225,14 +277,29 @@ class UsersController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+
+    public function status(Request $request)
     {
-        //
+        if ($request['username']){
+            $username=$request->username;
+            $status=$request->status;
+            if ($status=='Enabled'){
+                $status_change='Disabled';
+            }else{
+                $status_change='Enabled';
+            }
+
+            if (User::where('username',$username)->update(['status'=> $status_change])){
+                $alert['alert']= 'Success';
+                $alert['message']=$username.' status '.$status_change;
+            }else{
+                $alert['alert']= 'Error';
+                $alert['message']=__('alert.system_error');
+            }
+        }else{
+            $alert['alert']= 'Warning';
+            $alert['message']=__('alert.failed_save');
+        }
+        return json_encode($alert);
     }
 }

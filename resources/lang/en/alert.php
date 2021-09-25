@@ -9,6 +9,7 @@ return [
 	'before_save'=>'Data will be saved ... !!!',
 	'before_delete'=>'Data will be deleted ... !!!',
 	'failed_save'=>'Data failed to be saved.',
+	'failed_delete'=>'Data failed to be deleted.',
     'config_failed_save'=>'Configuration failed to be saved.',
     'system_error'=>'System error, contact IT Suport.', 
     'ext_not_allowed'=>'Extension not allowed.', 
@@ -17,4 +18,6 @@ return [
     'forbidden_tcode'=>'You are not allowed access ',
     'data_not_selected'=>'Data not selected.',
     'data_not_found'=>'Data not found.',
+    'confirm_delete'=>'This action cannot be undone, This will delete permanently. To confirm please type',
+
 ];
