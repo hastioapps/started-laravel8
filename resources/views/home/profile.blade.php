@@ -13,7 +13,7 @@
                 </a>
             </div>
             <h3 class="profile-username text-center">{{ Request::user()->id }}</h3>
-            <p class="text-muted text-center">{{ Str::of(Request::user()->role_id)->ltrim(Request::user()->company_id) }}</p>
+            <p class="text-muted text-center">{{ Str::of(Request::user()->role_id)->replaceFirst(Request::user()->company_id,'') }}</p>
             @error('password')
                 <script type="text/javascript">
                     $(document).ready(function (){ 

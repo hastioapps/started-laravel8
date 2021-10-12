@@ -63,7 +63,7 @@ class UsersController extends Controller
                 $label_status='<i class="text-warning">'.$row->status.'</i>';
             }  
             
-            $array_data['cell'] =array($row->id,$row->name,$row->phone,Str::of($row->role_id)->ltrim($row->company_id),$label_status);
+            $array_data['cell'] =array($row->id,$row->name,$row->phone,Str::of($row->role_id)->replaceFirst($row->company_id,''),$label_status);
             array_push($array_default,$array_data);
         }
         $data['rows'] = $array_default;
@@ -105,7 +105,7 @@ class UsersController extends Controller
         if(User::create([
             'id'                => $request->user_id,
             'name'              => $request->name,
-            'email'             => $request->id.'@hastioapps.com',
+            'email'             => $request->user_id.'@hastioapps.com',
             'phone'             => $request->phone, 
             'password'          => Hash::make($request->password),
             'role_id'           => $request->roles, 
@@ -170,7 +170,7 @@ class UsersController extends Controller
                         <tr>
                             <td>'.__("label.roles").'</td>
                             <td>:</td>
-                            <td>'.Str::of($users->role_id)->ltrim($users->company_id).'</td>
+                            <td>'.Str::of($users->role_id)->replaceFirst($users->company_id,'').'</td>
                         </tr>
                         <tr>
                             <td>Status</td>
