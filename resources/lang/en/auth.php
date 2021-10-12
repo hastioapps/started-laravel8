@@ -34,7 +34,7 @@ return [
     'success_register' => 'Registration successful, please login.',
     'alert_login' => 'Login failed! Please repeat again.',
     'verify_your_email_address' => 'Verify your email address',
-    'verify_intro' => 'Before proceeding, please check your email for a verification link. If you did not receive the email,',
+    'verify_intro' => 'Before proceeding, please check :email for a verification link. If you did not receive the email,',
     'click_here' => 'click here',
     'resend_email_message' => 'A fresh verification link has been sent to your email address.',
 

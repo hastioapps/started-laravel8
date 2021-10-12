@@ -17,7 +17,8 @@ return [
     'size_max_100'=>'Ukuran file maksimal 100kb.',
     'forbidden_tcode'=>'Anda tidak diizinkan akses ',
     'data_not_selected'=>'Data belum dipilih.',
-    'data_not_found'=>'Data tidak ditemukan.',
+    'data_not_found'=>':Data tidak ditemukan',
+    'data_not_find'=>'Kami tidak dapat menemukan data yang Anda cari. Sementara itu, Anda dapat kembali ke ',
     'confirm_delete'=>'Tindakan ini tidak bisa dibatalkan, Ini akan menghapus secara permanen. Untuk mengkonfirmasi silakan ketik',
 
 ];

@@ -15,12 +15,12 @@ class LoginController extends Controller
 
     public function store(Request $request){
         $request->validate([
-            'username'        => 'required',
+            'user_id'        => 'required',
             'password'      => 'required',
         ]);
 
         $data = [
-            'username'  => $request->username,
+            'id'  => $request->user_id,
             'password'  => $request->password,
             'status'    => 'Enabled',
         ];

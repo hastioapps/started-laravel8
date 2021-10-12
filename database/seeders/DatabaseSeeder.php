@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-        //seed default
+        //seed production
         Tcodes::insert([
             /*['id' => 'A000','description' => 'journal_entries','level_tcode' => '1','parent' => '0000','icon' => 'fa fa-book','url' => 'journal_entries','tcode_group_id' => '0','access' => 'Public'],
             ['id' => 'A010','description' => 'general_journals','level_tcode' => '2','parent' => 'A000','icon' => 'fa fa-newspaper','url' => 'journal_entries/general','tcode_group_id' => 'A010','access' => 'Public'],
@@ -51,10 +51,15 @@ class DatabaseSeeder extends Seeder
             ['id' => 'users.create','description' => 'user_create','level_tcode' => '3','parent' => 'users','icon' => 'fa fa-plus','url' => 'users/create','tcode_group' => 'users','access' => 'Public'],
             ['id' => 'users.edit','description' => 'user_edit','level_tcode' => '3','parent' => 'users','icon' => 'fa fa-edit','url' => 'users/edit','tcode_group' => 'users','access' => 'Public'],
             ['id' => 'users.reset','description' => 'users_reset','level_tcode' => '3','parent' => 'users','icon' => 'fa fa-key','url' => 'users/reset','tcode_group' => 'users','access' => 'Public'],
+            ['id' => 'users.branch_roles','description' => 'branch_user_roles','level_tcode' => '3','parent' => 'users','icon' => 'fa fa-universal-access','url' => 'users/branch_roles','tcode_group' => 'users','access' => 'Public'],
             ['id' => 'roles','description' => 'roles','level_tcode' => '2','parent' => 'home','icon' => 'fa fa-universal-access','url' => 'roles','tcode_group' => 'roles','access' => 'Public'],
             ['id' => 'roles.create','description' => 'role_create','level_tcode' => '3','parent' => 'roles','icon' => 'fa fa-plus','url' => 'roles/create','tcode_group' => 'roles','access' => 'Public'],
             ['id' => 'roles.show','description' => 'role_show','level_tcode' => '3','parent' => 'roles','icon' => 'fa fa-folder-open','url' => 'roles/show','tcode_group' => 'roles','access' => 'Public'],
             ['id' => 'roles.delete','description' => 'role_delete','level_tcode' => '3','parent' => 'roles','icon' => 'fa fa-times','url' => 'roles/delete','tcode_group' => 'roles','access' => 'Public'],
+            ['id' => 'branches','description' => 'branches','level_tcode' => '2','parent' => 'home','icon' => 'fa fa-code-branch','url' => 'branches','tcode_group' => 'branches','access' => 'Public'],
+            ['id' => 'branches.create','description' => 'branch_create','level_tcode' => '3','parent' => 'branches','icon' => 'fa fa-plus','url' => 'branches/create','tcode_group' => 'branches','access' => 'Public'],
+            ['id' => 'branches.edit','description' => 'branch_edit','level_tcode' => '3','parent' => 'branches','icon' => 'fa fa-edit','url' => 'branches/edit','tcode_group' => 'branches','access' => 'Public'],
+            
         ]);
         
         Currencies::create([
@@ -63,10 +68,9 @@ class DatabaseSeeder extends Seeder
         ]);
 
 
-        //seed default
+        //seed dev
         User::create([
-            'id'            => 1,
-            'username'      => 'hastioapps',
+            'id'            => 'hastioapps',
             'name'          => 'Hastio Apps',
             'email'         => 'hastio.apps@gmail.com',
             'phone'         => '085268952644', 
@@ -76,11 +80,11 @@ class DatabaseSeeder extends Seeder
             'started'         => 'Welcome',
             'master'        => true,
             'email_verified_at'=>now(),
-            'company_id'       => 1,
+            'company_id'       => 'hastioapps',
         ]);
 
         Companies::create([
-            'id'            => 1,
+            'id'            => 'hastioapps',
             'name'          => 'Hastio Apps',
             'address'       => 'Palembang',
             'currency_id'   => 'IDR', 
@@ -90,20 +94,20 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Branches::create([
-            'id'            => '1HO',
+            'id'            => 'hastioappsHO',
             'code'          => 'HO',
             'name'          => 'Head Office',
             'address'       => 'Palembang',
             'email'         => 'hastio.apps@gmail.com',
             'phone'         => '085268952644',  
             'manager'       => 'Hastio Pipandani, S.E.,M.M.',
-            'company_id'    => 1,
+            'company_id'    => 'hastioapps',
         ]);
         
         Branch_roles::create([
-            'id'            => '1HO1',
-            'user_id'       => 1,
-            'branch_id'     => '1HO',
+            'id'            => 'hastioappsHOhastioapps',
+            'user_id'       => 'hastioapps',
+            'branch_id'     => 'hastioappsHO',
         ]);
     }
 }

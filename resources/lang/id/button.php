@@ -13,6 +13,7 @@ return [
     'create'            => 'Buat',
     'add'               => 'Tambah',
     'back'              => 'Kembali',
-    'delete'              => 'Hapus',
+    'delete'            => 'Hapus',
+    'change_email'      => 'Ganti Email',
 
 ];

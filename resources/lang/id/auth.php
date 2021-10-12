@@ -34,7 +34,7 @@ return [
     'success_register' => 'Registrasi berhasil, silakan masuk.',
     'alert_login' => 'Masuk gagal! Silahkan ulangi lagi.',
     'verify_your_email_address' => 'Verifikasi alamat email Anda',
-    'verify_intro' => 'Sebelum melanjutkan, harap periksa email Anda untuk tautan verifikasi. Jika Anda tidak menerima email,',
+    'verify_intro' => 'Sebelum melanjutkan, harap periksa :email untuk tautan verifikasi. Jika Anda tidak menerima email,',
     'click_here' => 'klik disini',
     'resend_email_message' => 'Tautan verifikasi baru telah dikirim ke alamat email Anda.',
 

@@ -15,7 +15,7 @@ class CreateBranchRolesTable extends Migration
     {
         Schema::create('branch_roles', function (Blueprint $table) {
             $table->string('id')->primary();
-            $table->foreignId('user_id');
+            $table->string('user_id');
             $table->string('branch_id');
         });
     }

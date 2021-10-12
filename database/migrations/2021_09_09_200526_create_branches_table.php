@@ -16,13 +16,13 @@ class CreateBranchesTable extends Migration
         Schema::create('branches', function (Blueprint $table) {
             $table->string('id')->primary();
             $table->char('code',4);
-            $table->string('name',100);
+            $table->string('name');
             $table->text('address');
             $table->string('email')->nullable();
-            $table->char('phone',15)->nullable();
-            $table->string('manager',100)->nullable();
-            $table->char('status',15)->default('Enabled');
-            $table->foreignId('company_id');
+            $table->string('phone')->nullable();
+            $table->string('manager')->nullable();
+            $table->string('status')->default('Enabled');
+            $table->string('company_id');
             $table->timestamps();
         });
     }

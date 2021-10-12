@@ -14,6 +14,7 @@ use App\Http\Controllers\Home\CompanyController;
 use App\Http\Controllers\Home\ProfileController;
 use App\Http\Controllers\Home\UsersController;
 use App\Http\Controllers\Home\RolesController;
+use App\Http\Controllers\Home\BranchesController;
 use App\Http\Controllers\Reports\ReportsController;
 use App\Http\Controllers\Masters\MastersController;
 
@@ -42,6 +43,7 @@ Route::post('/auth/register', [RegisterController::class,'store']);
 Route::get('/email/verify', [EmailVerificationController::class,'notice'])->name('verification.notice')->middleware('auth');
 Route::get('/email/verify/{id}/{hash}', [EmailVerificationController::class,'verify'])->name('verification.verify')->middleware(['auth', 'signed']);
 Route::post('/email/verification-notification', [EmailVerificationController::class,'send'])->name('verification.send')->middleware(['auth', 'throttle:6,1']);
+Route::post('/email/change', [EmailVerificationController::class,'change'])->name('change.email')->middleware('auth');
 
 Route::get('/auth/forgot-password', [ForgotPasswordController::class,'request'])->name('password.request')->middleware('guest');
 Route::post('/auth/forgot-password', [ForgotPasswordController::class,'email'])->name('password.email')->middleware('guest');
@@ -66,7 +68,9 @@ Route::post('/company/edit', [CompanyController::class,'update'])->middleware('a
 Route::resource('users',UsersController::class)->only(['index','create','edit'])->names(['index' => 'users'])->middleware(['auth','verified','role']);
 Route::resource('users',UsersController::class)->only(['store','update'])->middleware(['auth','verified']);
 Route::get('/users/{id}/reset', [UsersController::class,'reset'])->name('users.reset')->middleware('auth','verified','role');
+Route::get('/users/{id}/branch_roles', [UsersController::class,'branch_roles'])->name('users.branch_roles')->middleware('auth','verified','role');
 Route::post('/users/flexigrid', [UsersController::class,'flexigrid'])->middleware('auth','verified');
+Route::post('/users/duallist', [UsersController::class,'duallist'])->middleware('auth','verified');
 Route::post('/users/show', [UsersController::class,'show'])->middleware('auth','verified');
 Route::post('/users/status', [UsersController::class,'status'])->middleware('auth','verified');
 
@@ -75,6 +79,12 @@ Route::resource('roles',RolesController::class)->only(['index','create','edit','
 Route::resource('roles',RolesController::class)->only(['store','update','destroy'])->middleware(['auth','verified']);
 Route::post('/roles/flexigrid', [RolesController::class,'flexigrid'])->middleware('auth','verified');
 Route::post('/roles/duallist', [RolesController::class,'duallist'])->middleware('auth','verified');
+
+Route::resource('branches',BranchesController::class)->only(['index','create','edit'])->names(['index' => 'branches'])->middleware(['auth','verified','role']);
+Route::resource('branches',BranchesController::class)->only(['store','update'])->middleware(['auth','verified']);
+Route::post('/branches/flexigrid', [BranchesController::class,'flexigrid'])->middleware('auth','verified');
+Route::post('/branches/show', [BranchesController::class,'show'])->middleware('auth','verified');
+Route::post('/branches/status', [BranchesController::class,'status'])->middleware('auth','verified');
 
 Route::get('/reports', [ReportsController::class,'reports'])->name('reports')->middleware('auth','verified','role');
 Route::get('/masters', [MastersController::class,'masters'])->name('masters')->middleware('auth','verified','role');

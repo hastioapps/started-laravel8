@@ -15,4 +15,11 @@ class Branches extends Model
     protected $fillable = [
         'id', 'code', 'name', 'address', 'email', 'phone', 'manager', 'company_id',
     ];
+
+    public function scopeFilter($query,$search,$qtype)
+    {
+        if (isset($search) && isset($qtype)){
+            return $query->where($qtype, 'LIKE',  $search.'%');
+        }
+    }
 }

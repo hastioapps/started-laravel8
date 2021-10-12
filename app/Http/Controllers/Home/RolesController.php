@@ -114,12 +114,13 @@ class RolesController extends Controller
         $this->breadcrumb->add(__('label.roles'), '/roles');
         $this->breadcrumb->add($id, '/roles/'.$id);
 		$data['breadcrumbs']    = $this->breadcrumb->render();
-        $data['title']          = __('label.roles').': '.$id;
-        $data['roles']          = Roles::select('*')->where(['role_name'=>$id,'company_id'=>$request->user()->company_id])->first();
+        $data['title']          = $id;
+        $data['roles']          = Roles::where(['role_name'=>$id,'company_id'=>$request->user()->company_id])->first();
         if (isset($data['roles'])){
             return view('home.roles_show',$data);
         }else{
-            $data['back']=route('roles');
+            $data['id']=$id;
+            $data['back']='roles';
             return view('layouts.not_found',$data);
         }
     }
@@ -127,9 +128,13 @@ class RolesController extends Controller
     public function duallist(Request $request)
     {
         if ($request['id']){
-            $role_tcodes = new Role_tcodes();
             $role=$request->id;
-        	$tcodes = $role_tcodes->tcodes($role);
+            $tcodes = Tcodes::select('tcodes.id', 'tcodes.description', 'tcodes.level_tcode', 'tcodes.tcode_group', 'role_tcodes.role_id as selected')
+                                ->leftJoin('role_tcodes', function ($join) use ($role) {
+                                    $join->on('tcodes.id', '=', 'role_tcodes.tcode_id')->where('role_tcodes.role_id', '=', $role);
+                                })
+                                ->where('tcodes.access','Public')
+                                ->get();
             foreach ($tcodes  as $tcode) {
                 if ($tcode->selected==$role){
                     $selected=true;

@@ -8,7 +8,7 @@
                 <a type="button" href="{{ route('users') }}" class="btn btn-tool" ><i class="fas fa-times"></i></a>
             </div>
         </div>
-        <form action="{{ url('users/'.$users->username) }}" method="post" class="form-horizontal">
+        <form action="{{ url('users/'.$users->id) }}" method="post" class="form-horizontal">
             @method('put')
             @csrf
             <div class="card-body">

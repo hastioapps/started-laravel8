@@ -8,7 +8,7 @@
                 <div class="input-group input-group-sm" style="width: 200px;">
                     <input type="text" placeholder="{{ __('button.search') }}..." class="form-control float-right dataSearch">
                     <select name="cmbKey" id="cmbKey" class="form-control">
-                        <option value="id">User ID</option>
+                        <option value="code">{{ __('label.code') }}</option>
                         <option value="name">{{ __('label.name') }}</option>
                         <option value="status">Status</option>
                     </select>
@@ -37,20 +37,18 @@
 <script type="text/javascript">
 	$(document).ready(function (){
 		$('#dataDisplays').flexigrid({
-    		url: '{{ url("users/flexigrid") }}',
+    		url: '{{ url("branches/flexigrid") }}',
     		dataType: 'json',
             buttons : [ {name : '<i class="fa fa-plus fa-xs"></i>',tooltip:'{{ __("button.create") }}',bclass : 'btn btn-primary btn-xs',onpress : btnAction},
                         {name : '<i class="fa fa-edit fa-xs"></i>',tooltip:'{{ __("button.edit") }}',bclass : 'btn btn-primary btn-xs',onpress : btnAction},
-                        {name : '<i class="fa fa-key fa-xs"></i>',tooltip:'{{ __("auth.reset_password") }}',bclass : 'btn btn-primary btn-xs',onpress : btnAction},
                         {name : '<i class="fa fa-lock fa-xs"></i>',tooltip:'Status',bclass : 'btn btn-primary btn-xs',onpress : btnAction},
-                        {name : '<i class="fa fa-folder-open fa-xs"></i>',tooltip:'{{ __("button.open") }}',bclass : 'btn btn-primary btn-xs',onpress : btnAction},
-                        {name : '<i class="fa fa-universal-access"></i>',tooltip:'{{ __("label.branch_user_roles") }}',bclass : 'btn btn-primary btn-xs',onpress : btnAction}
+                        {name : '<i class="fa fa-folder-open fa-xs"></i>',tooltip:'{{ __("button.open") }}',bclass : 'btn btn-primary btn-xs',onpress : btnAction}
             ],
     		colModel : [
-                {display: 'User ID', name : 'id',width:100, sortable : true, align: 'left', process: celDivAction},
-                {display: '{{ __("label.name") }}', name : 'name',width:500, sortable : true, align: 'left', process: celDivAction},
-                {display: 'Phone', name : 'phone',width:150, sortable : true, align: 'left', process: celDivAction},
-                {display: '{{ __("label.roles") }}', name : 'role_id',width:100, align: 'left', process: celDivAction},
+                {display: '{{ __("label.code") }}', name : 'code',width:100, sortable : true, align: 'left', process: celDivAction},
+                {display: '{{ __("label.name") }}', name : 'name',width:400, sortable : true, align: 'left', process: celDivAction},
+                {display: 'Phone', name : 'phone',width:250, sortable : true, align: 'left', process: celDivAction},
+                {display: 'Email', name : 'email',width:200, align: 'left', process: celDivAction},
                 {display: 'Status', name : 'status',width:80, align: 'left', process: celDivAction}
             ],
     		searchitems : false,
@@ -79,7 +77,7 @@
                 $('#modalDisplays').modal('show');
                 $.ajax({
                         type    : "POST",
-                        url     : '{{ url("users/show") }}',
+                        url     : '{{ url("branches/show") }}',
                         data    : "id="+id,
                         beforeSend: function () {
                             $(".dataModal").LoadingOverlay("show");
@@ -97,18 +95,12 @@
             var id=$('.trSelected',grid).children('td').eq(0).text();
             var status=$('.trSelected',grid).children('td').eq(4).text();
             if (action == '<i class="fa fa-plus fa-xs"></i>') {
-                document.location.href='users/create';
+                document.location.href='branches/create';
             }else if (action == '<i class="fa fa-edit fa-xs"></i>') {
                 if ($('.trSelected',grid).length != 1) {
                     toastr.warning('{{ __("alert.data_not_selected") }}');
                 }else{
-                    document.location.href='users/'+id+'/edit';
-                }
-            }else if (action == '<i class="fa fa-key fa-xs"></i>') {
-                if ($('.trSelected',grid).length != 1) {
-                    toastr.warning('{{ __("alert.data_not_selected") }}');
-                }else{
-                    document.location.href='users/'+id+'/reset';
+                    document.location.href='branches/'+id+'/edit';
                 }
             }else if (action == '<i class="fa fa-folder-open fa-xs"></i>') {
                 if ($('.trSelected',grid).length != 1) {
@@ -117,7 +109,7 @@
                     $('#modalDisplays').modal('show');
                     $.ajax({
                         type    : "POST",
-                        url     : '{{ url("users/show") }}',
+                        url     : '{{ url("branches/show") }}',
                         data    : "id="+id,
                         beforeSend: function () {
                             $(".dataModal").LoadingOverlay("show");
@@ -136,7 +128,7 @@
                     $.ajax({
                         type    : "POST",
                         dataType  : "json",
-                        url     : '{{ url("users/status") }}',
+                        url     : '{{ url("branches/status") }}',
                         data    : "id="+id+"&status="+status,
                         success : function(json){
                             if (json.alert=='Error'){
@@ -150,12 +142,6 @@
                             }
                         }
                     });
-                }
-            }else if (action == '<i class="fa fa-universal-access"></i>') {
-                if ($('.trSelected',grid).length != 1) {
-                    toastr.warning('{{ __("alert.data_not_selected") }}');
-                }else{
-                    document.location.href='users/'+id+'/branch_roles';
                 }
             }
         }

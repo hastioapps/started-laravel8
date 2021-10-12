@@ -12,10 +12,10 @@
             @csrf
             <div class="card-body">
                 <div class="form-group row">
-                    <label class="col-lg-2 col-md-2 col-sm-12 col-xs-12 control-label">Username*:</label>
+                    <label class="col-lg-2 col-md-2 col-sm-12 col-xs-12 control-label">User id*:</label>
                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                        <input value="{{ old('username') }}" class="form-control form-control-sm @error('username') is-invalid @enderror" id="username" name="username" type="text" maxlength="10" required/>
-                        @error('username') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                        <input value="{{ old('user_id') }}" class="form-control form-control-sm @error('user_id') is-invalid @enderror" id="user_id" name="user_id" type="text" maxlength="10" required/>
+                        @error('user_id') <div class="invalid-feedback">{{ $message }}</div> @enderror
                     </div>
                     <label class="col-lg-2 col-md-2 col-sm-12 col-xs-12 control-label">{{ __('label.full_name') }}*:</label>
                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
@@ -31,7 +31,7 @@
                     </div>
                     <label class="col-lg-2 col-md-2 col-sm-12 col-xs-12 control-label">{{ __('label.roles') }}*:</label>
                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                        <select name="roles" id="roles" class="form-control form-control-sm" required>
+                        <select name="roles" id="roles" class="form-control form-control-sm @error('roles') is-invalid @enderror" required>
                             <option value="Admin" {{ (old('roles') == 'Admin') ? "selected":"" }}>Admin</option>
                             @foreach ($roles as $role)
                                 <option value="{{ $role->id }}" {{ (old('roles') == $role->id) ? "selected":"" }}>{{ $role->role_name }}</option>

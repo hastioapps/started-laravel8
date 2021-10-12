@@ -17,7 +17,8 @@ return [
     'size_max_100'=>'Maximum file size 100kb.',
     'forbidden_tcode'=>'You are not allowed access ',
     'data_not_selected'=>'Data not selected.',
-    'data_not_found'=>'Data not found.',
+    'data_not_found'=>':Data not found',
+    'data_not_find'=>'We could not find the data you were looking for. Meanwhile, you may return to ',
     'confirm_delete'=>'This action cannot be undone, This will delete permanently. To confirm please type',
 
 ];

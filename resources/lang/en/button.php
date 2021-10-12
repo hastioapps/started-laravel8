@@ -14,5 +14,6 @@ return [
     'add'               => 'Add',
     'back'              => 'Back',
     'delete'            => 'Delete',
+    'change_email'      => 'Change Email',
 
 ];

@@ -34,5 +34,11 @@
           <p>{{ __('label.roles') }}</p>
         </a>
       </li>
+      <li class="nav-item">
+        <a href="{{ route('branches') }}" class="nav-link {{ (Request::is('branches*'))?'active':'' }}">
+          <i class="nav-icon fas fa-code-branch"></i>
+          <p>{{ __('label.branches') }}</p>
+        </a>
+      </li>
     </ul>
 </aside>

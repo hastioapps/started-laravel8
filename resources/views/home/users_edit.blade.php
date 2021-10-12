@@ -14,7 +14,7 @@
                 </a>
             </div>
         </div>
-        <form action="{{ url('users/'.$users->username) }}" method="post" class="form-horizontal">
+        <form action="{{ url('users/'.$users->id) }}" method="post" class="form-horizontal">
             @method('put')
             @csrf
             <div class="card-body">
@@ -33,7 +33,7 @@
                 <div class="form-group row">
                     <label class="col-lg-2 col-md-2 col-sm-12 col-xs-12 control-label">{{ __('label.roles') }}*:</label>
                     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                        <select name="roles" id="roles" class="form-control form-control-sm" required>
+                        <select name="roles" id="roles" class="form-control form-control-sm @error('roles') is-invalid @enderror" required>
                             <option value="Admin" {{ (old('roles',$users->role_id) == 'Admin') ? "selected":"" }}>Admin</option>
                             @foreach ($roles as $role)
                                 <option value="{{ $role->id }}" {{ (old('roles',$users->role_id) == $role->id) ? "selected":"" }}>{{ $role->role_name }}</option>

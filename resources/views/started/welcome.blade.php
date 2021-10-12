@@ -3,12 +3,10 @@
 <div class="lockscreen-wrapper">
     <div class="text-center">
         <h1>{{ Request::user()->name }}</h1>
-    </div>
-    <div class="lockscreen-logo">
-        {{ __('label.welcome_to_join') }}
+        <p>{{ __('label.welcome_to_join') }}</p>
     </div>
     <div class="text-center">
-      <button id="btnFinish" class="btn btn-primary">{{ __('button.finish') }}</button>
+      <button id="btnFinish" class="btn btn-primary btn-xs">{{ __('button.finish') }}</button>
     </div>
 </div>
 
@@ -18,7 +16,7 @@
             $.ajax({
                 type      : "POST",
                 dataType  : "json",
-                url       : 'welcome',
+                url       : "{{ url('welcome') }}",
                 data      : '',
                 beforeSend: function() {
                     $.LoadingOverlay("show", {

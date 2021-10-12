@@ -16,7 +16,7 @@ class RegisterController extends Controller
 
     public function store(Request $request){
         $request->validate([
-            'username'        => 'required|max:10|unique:users,username|alpha_num',
+            'user_id'            => 'required|max:10|unique:users,id|alpha_num',
             'company'       => 'required|max:100',
             'email'         => 'required|email|unique:users,email',
             'phone'         => 'required|max:15',
@@ -24,7 +24,7 @@ class RegisterController extends Controller
         ]);
 
         $data=User::create([
-            'username' => $request->username,
+            'id'       => $request->user_id,
             'name'     => $request->company,
             'email'    => $request->email,
             'phone'    => $request->phone, 

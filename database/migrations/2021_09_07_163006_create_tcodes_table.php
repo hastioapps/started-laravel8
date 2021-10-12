@@ -15,13 +15,13 @@ class CreateTcodesTable extends Migration
     {
         Schema::create('tcodes', function (Blueprint $table) {
             $table->string('id')->primary();
-            $table->string('description',200);
+            $table->string('description');
             $table->char('level_tcode',1);
             $table->string('parent');
-            $table->string('icon',50);
-            $table->string('url',500);
+            $table->string('icon');
+            $table->string('url');
             $table->string('tcode_group');
-            $table->char('access',10);
+            $table->string('access');
         });
     }
 

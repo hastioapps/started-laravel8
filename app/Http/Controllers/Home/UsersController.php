@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\Models\User;
 use App\Models\Roles;
+use App\Models\Branches;
+use App\Models\Branch_roles;
 
 class UsersController extends Controller
 {
@@ -33,7 +35,7 @@ class UsersController extends Controller
       	$sortname       = (isset($request->sortname))? $request->sortname : ' id ';
       	$sortorder      = (isset($request->sortorder))? $request->sortorder : ' asc ';
 
-        $result         = User::select('username','name','phone','role_id','status','company_id')
+        $result         = User::select('id','name','phone','role_id','status','company_id')
                             ->where('master', '=', false)
                             ->where('company_id', '=', $request->user()->company_id)
                             ->filter($request['query'],$request['qtype'])
@@ -42,7 +44,7 @@ class UsersController extends Controller
                             ->limit($rp)
                             ->get();
         
-        $result_total   = User::select('username')
+        $result_total   = User::select('id')
                             ->where('master', '=', false)
                             ->where('company_id', '=', $request->user()->company_id)
                             ->filter($request['query'],$request['qtype'])
@@ -52,7 +54,7 @@ class UsersController extends Controller
         $array_default = array();
         $array_data = array();
         foreach ($result as $row){
-            $rows['ID'] = $row->username;
+            $rows['ID'] = $row->id;
             if($row->status=='Disabled'){
                 $label_status='<i class="text-danger">'.$row->status.'</i>';
             }else if($row->status=='Enabled') {
@@ -61,7 +63,7 @@ class UsersController extends Controller
                 $label_status='<i class="text-warning">'.$row->status.'</i>';
             }  
             
-            $array_data['cell'] =array($row->username,$row->name,$row->phone,Str::of($row->role_id)->ltrim($row->company_id),$label_status);
+            $array_data['cell'] =array($row->id,$row->name,$row->phone,Str::of($row->role_id)->ltrim($row->company_id),$label_status);
             array_push($array_default,$array_data);
         }
         $data['rows'] = $array_default;
@@ -93,7 +95,7 @@ class UsersController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'username'      => 'required|max:10|unique:users,username|alpha_num',
+            'user_id'       => 'required|max:10|unique:users,id|alpha_num',
             'name'          => 'required|max:100',
             'phone'         => 'max:15',
             'roles'         => 'required',
@@ -101,9 +103,9 @@ class UsersController extends Controller
         ]);
 
         if(User::create([
-            'username'          => $request->username,
+            'id'                => $request->user_id,
             'name'              => $request->name,
-            'email'             => $request->username.'@hastioapps.com',
+            'email'             => $request->id.'@hastioapps.com',
             'phone'             => $request->phone, 
             'password'          => Hash::make($request->password),
             'role_id'           => $request->roles, 
@@ -128,9 +130,9 @@ class UsersController extends Controller
      */
     public function show(Request $request)
     {
-        $users=User::select('username','name','phone','role_id','company_id','status','created_at','updated_at')
+        $users=User::select('id','name','phone','role_id','company_id','status','created_at','updated_at')
                     ->where([
-                        'username'=>$request->username,
+                        'id'=>$request->id,
                         'master'=>false,
                         'company_id'=>$request->user()->company_id])
                     ->first();
@@ -151,9 +153,9 @@ class UsersController extends Controller
                     </thead>
                     <tbody>
                         <tr>
-                            <td style="width:20%">Username</td>
+                            <td style="width:20%">User ID</td>
                             <td style="width:5%">:</td>
-                            <td style="width:75%">'.$users->username.'</td>
+                            <td style="width:75%">'.$users->id.'</td>
                         </tr>
                         <tr>
                             <td style="width:20%">'.__("label.name").'</td>
@@ -190,7 +192,7 @@ class UsersController extends Controller
             </div>';
             return $text;
         }else{
-            return __('alert.data_not_found');
+            return __('alert.data_not_found',['Data' => $request->id ?? 'Data']);
         }
     }
 
@@ -204,15 +206,16 @@ class UsersController extends Controller
     {
         $this->breadcrumb->add(__('label.home'), '/');
         $this->breadcrumb->add(__('label.users'), '/users');
-        $this->breadcrumb->add(__('button.edit'), '/users'.$id.'/edit');
+        $this->breadcrumb->add(__('button.edit'), '/users/'.$id.'/edit');
 		$data['breadcrumbs']    = $this->breadcrumb->render();
         $data['title']          = __('label.user_edit');
         $data['roles']          = Roles::select('id','role_name')->where('company_id',$request->user()->company_id)->get();
-        $data['users']          = User::select('username','name','phone','role_id')->where(['username'=>$id,'master'=>false,'company_id'=>$request->user()->company_id])->first();
+        $data['users']          = User::select('id','name','phone','role_id')->where(['id'=>$id,'master'=>false,'company_id'=>$request->user()->company_id])->first();
         if (isset($data['users'])){
             return view('home.users_edit',$data);
         }else{
-            $data['back']=route('users');
+            $data['id']=$id;
+            $data['back']='users';
             return view('layouts.not_found',$data);
         }
     }
@@ -224,11 +227,12 @@ class UsersController extends Controller
         $this->breadcrumb->add(__('auth.reset_password'), '/users'.$id.'/reset');
 		$data['breadcrumbs']    = $this->breadcrumb->render();
         $data['title']          = __('auth.reset_password');
-        $data['users']          = User::select('username')->where(['username'=>$id,'master'=>false,'company_id'=>$request->user()->company_id])->first();
+        $data['users']          = User::select('id')->where(['id'=>$id,'master'=>false,'company_id'=>$request->user()->company_id])->first();
         if (isset($data['users'])){
             return view('home.users_reset',$data);
         }else{
-            $data['back']=route('users');
+            $data['id']=$id;
+            $data['back']='users';
             return view('layouts.not_found',$data);
         }
     }
@@ -247,7 +251,7 @@ class UsersController extends Controller
                 'password'      => 'required|confirmed',
             ]);
 
-            if(User::where(['username'=>$id,'master'=>false,'company_id'=>$request->user()->company_id])->update([
+            if(User::where(['id'=>$id,'master'=>false,'company_id'=>$request->user()->company_id])->update([
                 'password'      => Hash::make($request->password),
             ])){
                 $request->session()->flash('success',__('alert.after_update'));
@@ -263,7 +267,7 @@ class UsersController extends Controller
                 'roles'         => 'required',
             ]);
 
-            if(User::where(['username'=>$id,'master'=>false,'company_id'=>$request->user()->company_id])->update([
+            if(User::where(['id'=>$id,'master'=>false,'company_id'=>$request->user()->company_id])->update([
                 'name'              => $request->name,
                 'phone'             => $request->phone, 
                 'role_id'           => $request->roles, 
@@ -277,11 +281,10 @@ class UsersController extends Controller
         }
     }
 
-
     public function status(Request $request)
     {
-        if ($request['username']){
-            $username=$request->username;
+        if ($request['id']){
+            $id=$request->id;
             $status=$request->status;
             if ($status=='Enabled'){
                 $status_change='Disabled';
@@ -289,9 +292,9 @@ class UsersController extends Controller
                 $status_change='Enabled';
             }
 
-            if (User::where('username',$username)->update(['status'=> $status_change])){
+            if (User::where('id',$id)->update(['status'=> $status_change])){
                 $alert['alert']= 'Success';
-                $alert['message']=$username.' status '.$status_change;
+                $alert['message']=$id.' status '.$status_change;
             }else{
                 $alert['alert']= 'Error';
                 $alert['message']=__('alert.system_error');
@@ -301,5 +304,67 @@ class UsersController extends Controller
             $alert['message']=__('alert.failed_save');
         }
         return json_encode($alert);
+    }
+
+    public function branch_roles(Request $request, $id)
+    {
+        $this->breadcrumb->add(__('label.home'), '/');
+        $this->breadcrumb->add(__('label.users'), '/users');
+        $this->breadcrumb->add($id, '/users/'.$id.'branch_roles');
+		$data['breadcrumbs']    = $this->breadcrumb->render();
+        $data['title']          = $id;
+        $data['users']          = User::select('id','company_id')->where(['id'=>$id,'master'=>false,'company_id'=>$request->user()->company_id])->first();
+        if (isset($data['users'])){
+            return view('home.users_branch_roles',$data);
+        }else{
+            $data['id']=$id;
+            $data['back']='users';
+            return view('layouts.not_found',$data);
+        }
+    }
+
+    public function duallist(Request $request)
+    {
+        if ($request['id']){
+            $user_id=$request->id;
+            $result = Branches::select('branches.id', 'branches.code', 'branches.name', 'branch_roles.user_id as selected')
+                                ->leftJoin('branch_roles', function ($join) use ($user_id) {
+                                    $join->on('branches.id', '=', 'branch_roles.branch_id')->where('branch_roles.user_id', '=', $user_id);
+                                })
+                                ->where('branches.company_id',$request->company_id)
+                                ->get();
+        	foreach ($result  as $branch) {
+                if ($branch->selected==$user_id){
+                    $selected=true;
+                }else{
+                    $selected=false;
+                }
+                $dataArray[]= array("item"=> $branch->code.' - '.$branch->name,"value"=> $branch->id,"selected"=> $selected);
+            }
+            return json_encode($dataArray);
+        }else if ($request['code']){
+	        $user_id=$request->code;
+        	if(!isset($request->data)){
+        		Branch_roles::where('user_id',$user_id)->delete();
+        		$alert['alert']= 'Success';
+        		$alert['message']=__('alert.after_save');
+        	}else{
+        		$data=$request->data;
+	        	$branches=array();
+	        	foreach ($data as $branch) {
+		        	$id=$branch.$user_id;
+		        	$branches[]=array("id"=>$id, "user_id"=>$user_id, "branch_id"=>$branch);
+		        }
+                Branch_roles::where('user_id',$user_id)->delete();
+                if(Branch_roles::insert($branches)){
+		            $alert['alert']= 'Success';
+			        $alert['message']=__('alert.after_save');
+		        }else{
+					$alert['alert']= 'Error';
+			        $alert['message']=__('alert.system_error');
+				}
+	        }
+        	return json_encode($alert);
+        };
     }
 }

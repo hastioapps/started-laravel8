@@ -18,13 +18,13 @@
           @error('company') <div class="invalid-feedback">{{ $message }}</div> @enderror
         </div>
         <div class="input-group mb-2">
-          <input value="{{ old('username') }}" placeholder="Username" class="form-control form-control-sm @error('username') is-invalid @enderror" id="username" name="username" type="text" maxlength="10" required/>
+          <input value="{{ old('user_id') }}" placeholder="User ID" class="form-control form-control-sm @error('user_id') is-invalid @enderror" id="user_id" name="user_id" type="text" maxlength="10" required/>
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-user"></span>
             </div>
           </div>
-          @error('username') <div class="invalid-feedback">{{ $message }}</div> @enderror
+          @error('user_id') <div class="invalid-feedback">{{ $message }}</div> @enderror
         </div>
         <div class="input-group mb-2">
           <input value="{{ old('email') }}" placeholder="Email" class="form-control form-control-sm @error('email') is-invalid @enderror" id="email" name="email" type="email" required/>

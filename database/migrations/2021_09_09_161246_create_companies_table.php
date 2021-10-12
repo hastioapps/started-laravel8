@@ -14,17 +14,17 @@ class CreateCompaniesTable extends Migration
     public function up()
     {
         Schema::create('companies', function (Blueprint $table) {
-            $table->id();
-            $table->string('name',100);
+            $table->string('id')->primary();
+            $table->string('name');
             $table->text('address');
-            $table->char('currency_id',4);
+            $table->string('currency_id');
             $table->string('email')->nullable();
-            $table->char('phone',15)->nullable();
-            $table->char('npwp',20)->nullable();
-            $table->string('npwp_name',100)->nullable();
+            $table->string('phone')->nullable();
+            $table->string('npwp')->nullable();
+            $table->string('npwp_name')->nullable();
             $table->text('npwp_address')->nullable();
             $table->string('img')->nullable();
-            $table->string('owner',100);
+            $table->string('owner');
             $table->timestamps();
         });
     }

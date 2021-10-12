@@ -12,9 +12,16 @@
                     <img class="profile-user-img img-fluid" src="{{ (is_file('storage/users-img/'.Request::user()->img))? asset('storage/users-img/'.Request::user()->img):url('assets/img/default.png')}}" alt="...">
                 </a>
             </div>
-            <h3 class="profile-username text-center">{{ Request::user()->username }}</h3>
+            <h3 class="profile-username text-center">{{ Request::user()->id }}</h3>
             <p class="text-muted text-center">{{ Str::of(Request::user()->role_id)->ltrim(Request::user()->company_id) }}</p>
             @error('password')
+                <script type="text/javascript">
+                    $(document).ready(function (){ 
+                        toastr.warning("{{ $message }}");
+                    });
+                </script>
+            @enderror
+            @error('email')
                 <script type="text/javascript">
                     $(document).ready(function (){ 
                         toastr.warning("{{ $message }}");
@@ -26,6 +33,10 @@
                     <div class="nav flex-column nav-tabs h-100" id="vert-tabs-tab" role="tablist" aria-orientation="vertical">
                         <a class="nav-link active" id="vert-tabs-profile-tab" data-toggle="pill" href="#vert-tabs-profile" role="tab" aria-controls="vert-tabs-profile" aria-selected="true">{{ __('label.profile') }}</a>
                         <a class="nav-link" id="vert-tabs-password-tab" data-toggle="pill" href="#vert-tabs-password" role="tab" aria-controls="vert-tabs-password" aria-selected="false">{{ __('auth.reset_password') }}</a>
+                        @if (Request::user()->master==1)
+                        <a class="nav-link" id="vert-tabs-email-tab" data-toggle="pill" href="#vert-tabs-email" role="tab" aria-controls="vert-tabs-email" aria-selected="false">{{ __('button.change_email') }}</a>
+                        <a class="nav-link" id="vert-tabs-branch-tab" data-toggle="pill" href="#vert-tabs-branch" role="tab" aria-controls="vert-tabs-branch" aria-selected="false">{{ __('label.branch') }}</a>
+                        @endif
                     </div>
                 </div>
                 <div class="col-7 col-sm-9">
@@ -39,11 +50,13 @@
                                         <td style="width:5%">:</td>
                                         <td style="width:75%"><input value="{{ Request::user()->name }}" class="form-control form-control-sm" maxlength="100" id="txtName" type="text"/></td>
                                     </tr>
+                                    @if (Request::user()->master==1)
                                     <tr>
                                         <td>Email</td>
                                         <td>:</td>
                                         <td>{{ Request::user()->email }}</td>
                                     </tr>
+                                    @endif
                                     <tr>
                                         <td>Phone</td>
                                         <td>:</td>
@@ -52,7 +65,7 @@
                                     <tr>
                                         <td>Master</td>
                                         <td>:</td>
-                                        <td>{{ (Request::user()->master)? 'True':'False' }}</td>
+                                        <td>{{ (Request::user()->master==1)? 'True':'False' }}</td>
                                     </tr>
                                     <tr>
                                         <td>{{ __('label.created_at') }}</td>
@@ -91,6 +104,28 @@
                                 </div>
                             </form>
                         </div>
+                        @if (Request::user()->master==1)
+                        <div class="tab-pane fade" id="vert-tabs-email" role="tabpanel" aria-labelledby="vert-tabs-email-tab">
+                            <form action="{{ route('change.email') }}" method="POST">
+                                @csrf
+                                <div class="form-group row mb-2">
+                                    <label class="col-sm-2 col-form-label">{{ __('label.new_email') }}*</label>
+                                    <div class="col-sm-10">
+                                        <input value="{{ old('email') }}" class="form-control form-control-sm @error('email') is-invalid @enderror" id="email" name="email" type="email" required/>
+                                        @error('email') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                                    </div>
+                                </div>
+                                <div class="form-group row mb-2">
+                                    <div class="offset-sm-2 col-sm-10">
+                                        <button type="submit" class="btn btn-primary btn-sm">{{ __('button.change_email') }}</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="tab-pane fade" id="vert-tabs-branch" role="tabpanel" aria-labelledby="vert-tabs-branch-tab">
+                            <div class="tcode"></div>
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -195,4 +230,47 @@
             }
         });
 </script>
+
+@if (Request::user()->master==1)
+<script type="text/javascript">
+	$(document).ready(function (){
+		$.ajax({
+            type        : "POST",
+            dataType    : "json",
+            url         : "{{ url('users/duallist') }}",
+            data        : "id={{ Request::user()->id }}&company_id={{ Request::user()->company_id }}",
+            success     : function(dataArray){
+                var settings = {
+                    "dataArray": dataArray,
+                    "tabNameText": "Disabled",
+                    "rightTabNameText": "Enabled",
+                    "callable": function (items) {
+                        var totalArray=items.length;
+                        var data=[];
+                        for (i=0;i<totalArray;i++){
+                            data.push(items[i]['value']);
+                        }
+                        $.ajax({
+                            type        : "POST",
+                            dataType    : "json",
+                            url         : "{{ url('users/duallist') }}",
+                            data        : {code:"{{ Request::user()->id }}",data:data},
+                            success     : function(json){
+                                if (json.alert=='Error'){
+                                    toastr.error(json.message);
+                                }else if (json.alert=='Warning'){
+                                    toastr.warning(json.message);
+                                }else if (json.alert=='Success'){
+                                    toastr.success(json.message);
+                                }
+                            }
+                        });
+                    }
+                };
+                $(".tcode").transfer(settings);
+            }
+        });
+	});
+</script>
+@endif
 @endsection
