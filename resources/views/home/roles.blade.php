@@ -30,7 +30,7 @@
                 {display: '{{ __("label.roles") }}', name : 'role_name',width:600, sortable : true, align: 'left', process: celDivAction},
             ],
     		searchitems : false,
-    		sortname: 'id',
+    		sortname: 'role_name',
     		sortorder: 'asc',
     		usepager: true,
     		title: false,
@@ -45,7 +45,7 @@
         );
 
         $('#btnSearch').click(function(){
-            $('#dataDisplays').flexOptions({ query: $(".dataSearch").val(),qtype: 'role_name', rp: 10,sortname: 'id', sortorder: 'asc' }).flexReload();
+            $('#dataDisplays').flexOptions({ query: $(".dataSearch").val(),qtype: 'role_name', rp: 10,sortname: 'role_name', sortorder: 'asc' }).flexReload();
             return false;
         });
 

@@ -14,7 +14,7 @@ class MastersController extends Controller
 
     public function masters(Request $request)
     {
-        $this->breadcrumb->add(__('label.welcome'), '/');
+        $this->breadcrumb->add(__('label.master_data'), '/');
 		$data['breadcrumbs'] = $this->breadcrumb->render();
         $data['title'] = __('label.title');
         return view('masters.index',$data);

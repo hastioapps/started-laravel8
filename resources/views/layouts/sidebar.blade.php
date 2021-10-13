@@ -1,12 +1,6 @@
 <aside class="control-sidebar control-sidebar-dark">
     <ul class="nav nav-pills nav-sidebar flex-column mt-2"  data-widget="treeview" role="menu" data-accordion="false">
       <li class="nav-header">{{ __('label.profile') }}</li>
-      <li class="nav-item">
-        <a href="{{ route('profile') }}" class="nav-link {{ (Request::is('profile'))?'active':'' }}">
-          <i class="nav-icon fa fa-user"></i>
-          <p>{{ Str::limit(Request::user()->name,30,'...') }}</p>
-        </a>
-      </li>
       @if(Request::user()->company_id!=null)
       <li class="nav-item">
         <a href="{{ route('company') }}" class="nav-link {{ (Request::is('company*'))?'active':'' }}">
@@ -15,6 +9,12 @@
         </a>
       </li>
       @endif
+      <li class="nav-item">
+        <a href="{{ route('profile') }}" class="nav-link {{ (Request::is('profile'))?'active':'' }}">
+          <i class="nav-icon fa fa-user"></i>
+          <p>{{ Str::limit(Request::user()->name,30,'...') }}</p>
+        </a>
+      </li>
       <li class="nav-item">
         <a href="{{ route('logout') }}" class="nav-link">
           <i class="nav-icon fa fa-sign-out-alt"></i>

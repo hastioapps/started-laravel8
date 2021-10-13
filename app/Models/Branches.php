@@ -19,7 +19,7 @@ class Branches extends Model
     public function scopeFilter($query,$search,$qtype)
     {
         if (isset($search) && isset($qtype)){
-            return $query->where($qtype, 'LIKE',  $search.'%');
+            return $query->where($qtype, 'LIKE',  '%'.$search.'%');
         }
     }
 }

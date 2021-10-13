@@ -14,7 +14,7 @@ class ReportsController extends Controller
 
     public function reports(Request $request)
     {
-        $this->breadcrumb->add(__('label.welcome'), '/');
+        $this->breadcrumb->add(__('label.reports'), '/');
 		$data['breadcrumbs'] = $this->breadcrumb->render();
         $data['title'] = __('label.title');
         return view('reports.index',$data);

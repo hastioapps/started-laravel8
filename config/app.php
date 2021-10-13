@@ -14,6 +14,7 @@ return [
     */
 
     'name' => env('APP_NAME', 'Started-laravel8'),
+    'logo' => 'logo.svg',
     'version' => '1.0',
     'copyright' => '2021 Hastio Apps',
 

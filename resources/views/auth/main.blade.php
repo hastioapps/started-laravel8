@@ -16,9 +16,10 @@
         <div class="login-box">
           <div class="card card-outline card-blue">
             <div class="card-header text-center">
-              <img src="{{ url('logo.svg') }}" alt="..." width="50px" height="50px"> <h4>{{ $title ?? __('label.title') }}</h4>
+              <img src="{{ url(config('app.logo')) }}" alt="..." width="50px" height="50px"> <h4>{{ config('app.name') }}</h4>
             </div>
             <div class="card-body">
+                <h5>{{ $title ?? __('label.title') }}</h5>
                 @yield('content')
             </div>
             <div class="card-footer text-center">

@@ -53,7 +53,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function scopeFilter($query,$search,$qtype)
     {
         if (isset($search) && isset($qtype)){
-            return $query->where($qtype, 'LIKE',  $search.'%');
+            return $query->where($qtype, 'LIKE',  '%'.$search.'%');
         }
     }
 }

@@ -30,7 +30,7 @@ class RolesController extends Controller
         $page           = (isset($request->page))?$request->page: 1;
 		$rp             = (isset($request->rp))?$request->rp : 10;
         $start          = (($page-1) * $rp);
-      	$sortname       = (isset($request->sortname))? $request->sortname : ' id ';
+      	$sortname       = (isset($request->sortname))? $request->sortname : ' role_name ';
       	$sortorder      = (isset($request->sortorder))? $request->sortorder : ' asc ';
 
         $result         = Roles::select('role_name')
