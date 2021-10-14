@@ -52,7 +52,7 @@
                 {display: 'Status', name : 'status',width:80, align: 'left', process: celDivAction}
             ],
     		searchitems : false,
-    		sortname: 'id',
+    		sortname: 'code',
     		sortorder: 'asc',
     		usepager: true,
     		title: false,
@@ -67,7 +67,7 @@
         );
 
         $('#btnSearch').click(function(){
-            $('#dataDisplays').flexOptions({ query: $(".dataSearch").val(),qtype: $("#cmbKey").val(), rp: 10,sortname: 'id', sortorder: 'asc' }).flexReload();
+            $('#dataDisplays').flexOptions({ query: $(".dataSearch").val(),qtype: $("#cmbKey").val(), rp: 10,sortname: 'code', sortorder: 'asc' }).flexReload();
             return false;
         });
 

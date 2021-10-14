@@ -29,7 +29,7 @@ class BranchesController extends Controller
         $page           = (isset($request->page))?$request->page: 1;
 		$rp             = (isset($request->rp))?$request->rp : 10;
         $start          = (($page-1) * $rp);
-      	$sortname       = (isset($request->sortname))? $request->sortname : ' id ';
+      	$sortname       = (isset($request->sortname))? $request->sortname : ' code ';
       	$sortorder      = (isset($request->sortorder))? $request->sortorder : ' asc ';
         $user_id        = $request->user()->id;
         $result         = Branches::select('code','name','phone','email','status')
