@@ -46,7 +46,7 @@
             ],
     		colModel : [
                 {display: '{{ __("label.code") }}', name : 'code',width:100, sortable : true, align: 'left', process: celDivAction},
-                {display: '{{ __("label.name") }}', name : 'name',width:400, sortable : true, align: 'left', process: celDivAction},
+                {display: '{{ __("label.branch") }}', name : 'name',width:400, sortable : true, align: 'left', process: celDivAction},
                 {display: 'Phone', name : 'phone',width:250, sortable : true, align: 'left', process: celDivAction},
                 {display: 'Email', name : 'email',width:200, align: 'left', process: celDivAction},
                 {display: 'Status', name : 'status',width:80, align: 'left', process: celDivAction}

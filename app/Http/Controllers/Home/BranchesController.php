@@ -148,7 +148,7 @@ class BranchesController extends Controller
                     </thead>
                     <tbody>
                         <tr>
-                            <td style="width:20%">'.__("label.name").'</td>
+                            <td style="width:20%">'.__("label.branch").'</td>
                             <td style="width:5%">:</td>
                             <td style="width:75%">'.$branches->name.'</td>
                         </tr>
@@ -206,7 +206,7 @@ class BranchesController extends Controller
     {
         $this->breadcrumb->add(__('label.home'), '/');
         $this->breadcrumb->add(__('label.branches'), '/branches');
-        $this->breadcrumb->add(__('button.edit'), '/branches'.$id.'/edit');
+        $this->breadcrumb->add(__('button.edit'), '/branches/'.$id.'/edit');
 		$data['breadcrumbs']    = $this->breadcrumb->render();
         $data['title']          = __('label.branch_edit');
         $user_id                = $request->user()->id;
@@ -281,7 +281,7 @@ class BranchesController extends Controller
 
             if (Branches::where('id',$id)->update(['status'=> $status_change])){
                 $alert['alert']= 'Success';
-                $alert['message']=$id.' status '.$status_change;
+                $alert['message']=$request->id.' status '.$status_change;
             }else{
                 $alert['alert']= 'Error';
                 $alert['message']=__('alert.system_error');
