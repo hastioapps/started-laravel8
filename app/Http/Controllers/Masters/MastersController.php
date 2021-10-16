@@ -7,11 +7,6 @@ use Illuminate\Http\Request;
 
 class MastersController extends Controller
 {
-    public function __construct()
-    {        
-        parent::__construct();
-    }
-
     public function masters(Request $request)
     {
         $this->breadcrumb->add(__('label.master_data'), '/');

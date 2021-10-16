@@ -12,11 +12,6 @@ use App\Models\Branch_roles;
 
 class StartedCompanyController extends Controller
 {
-    public function __construct()
-    {        
-        parent::__construct();
-    }
-
     public function company(){
         $this->breadcrumb->add(__('label.started'), '/home');
         $this->breadcrumb->add('1', '/started/company');

@@ -8,11 +8,6 @@ use App\Models\User;
 
 class StartedWelcomeController extends Controller
 {
-    public function __construct()
-    {        
-        parent::__construct();
-    }
-
     public function welcome(Request $request){
         $this->breadcrumb->add(__('label.welcome'), '/welcome');
 		$data['breadcrumbs'] = $this->breadcrumb->render();

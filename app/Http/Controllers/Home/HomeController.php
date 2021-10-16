@@ -7,11 +7,6 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    public function __construct()
-    {        
-        parent::__construct();
-    }
-
     public function home(Request $request)
     {
         $this->breadcrumb->add(__('label.home'), '/');

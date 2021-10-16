@@ -6,7 +6,7 @@
         {{ session('message') }}
     </div>
 @endif
-<div class="text-center">
+<div>
     {{  __('auth.verify_intro',['email'=>Request::user()->email])  }}
     <form class="d-inline" method="POST" action="{{ route('verification.send') }}">
         @csrf

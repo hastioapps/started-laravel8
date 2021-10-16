@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>{{ config('app.name') }} | {{ $title ?? __('label.title') }}</title>
+        <title>{{ $title ?? __('label.title') }} | {{ config('app.name') }}</title>
         <link rel="icon" type="image/x-icon" href="{{ url('favicon.ico') }}" />
         <link rel="stylesheet" href="{{ url('assets/fontawesome-free/css/all.min.css') }}"/>
         <link rel="stylesheet" href="{{ url('assets/adminlte3/dist/css/adminlte.min.css') }}">

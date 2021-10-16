@@ -12,9 +12,7 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-
     public $breadcrumb;
-
     public function __construct() {   
       $this->breadcrumb = new Breadcrumb();
     }

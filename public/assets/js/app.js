@@ -8,6 +8,8 @@ $(document).ready(function (){
     $.LoadingOverlaySetup({
         background      : "rgba(0, 0, 0, 0)"
     });
+
+    $('.select2').select2({theme:'classic'});
     
     $(document).ajaxStart(function(){
         $(".brand-image").LoadingOverlay("show");

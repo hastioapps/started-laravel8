@@ -10,11 +10,6 @@ use App\Models\Currencies;
 
 class CompanyController extends Controller
 {
-    public function __construct()
-    {        
-        parent::__construct();
-    }
-
     public function company(Request $request)
     {
         $this->breadcrumb->add(__('label.home'), '/');

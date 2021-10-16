@@ -6,7 +6,7 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <meta name="csrf-token" content="{{ csrf_token() }}">
-        <title>{{ config('app.name') }} | {{ $title ?? __('label.title') }}</title>
+        <title>{{ $title ?? __('label.title') }} | {{ config('app.name') }}</title>
         <link rel="icon" type="image/x-icon" href="{{ url('favicon.ico') }}" />
         <link rel="stylesheet" href="{{ url('assets/fontawesome-free/css/all.min.css') }}"/>
         <link rel="stylesheet" href="{{ url('assets/adminlte3/dist/css/adminlte.min.css') }}">
@@ -15,6 +15,7 @@
         <link rel="stylesheet" href="{{ url('assets/flexigrid/css/flexigrid.css') }}">
         <link rel="stylesheet" href="{{ url('assets/DualListboxTransfer/icon_font/css/icon_font.css') }}">
         <link rel="stylesheet" href="{{ url('assets/DualListboxTransfer/css/jquery.transfer.css') }}">
+        <link rel="stylesheet" href="{{ url('assets/select2/css/select2.min.css') }}">
         <script src="{{ url('assets/jquery/jquery.min.js') }}"></script>
         <script src="{{ url('assets/flexigrid/js/flexigrid.js') }}"></script>
     </head>
@@ -131,6 +132,7 @@
         <script src="{{ url('assets/validate/jquery.validate.js') }}"></script>
         <script src="{{ url('assets/sweetalert/dist/sweetalert.min.js') }}"></script>
         <script src="{{ url('assets/DualListboxTransfer/js/jquery.transfer.js') }}"></script>
+        <script src="{{ url('assets/select2/js/select2.min.js') }}"></script>
         <script src="{{ url('assets/js/app.js') }}"></script>
     </body>
 </html>
